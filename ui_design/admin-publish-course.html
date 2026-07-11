@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>发布课程 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hd{display:flex;align-items:center;padding:10px 16px;background:var(--s)}
+.hd-back{display:flex;align-items:center;gap:4px;background:none;border:none;padding:4px 0;cursor:pointer;color:var(--fg);font-size:15px}
+.hd-back svg{width:22px;height:22px}
+.hd h1{flex:1;text-align:center;font-size:18px;font-weight:700;letter-spacing:-0.3px;margin-right:28px}
+.fm{padding:16px}
+.sg{background:var(--s);border-radius:var(--rl);border:1px solid var(--b);overflow:hidden;margin-bottom:12px}
+.sg-h{padding:14px 16px 10px;font-size:13px;font-weight:600;border-bottom:1px solid var(--b)}
+.sg-b{padding:10px 16px 14px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.fg:last-child{margin-bottom:0}
+.fg label{font-size:12px;font-weight:600}
+.fg .rq{color:#dc2626;margin-left:2px}
+.fg .inp,.fg select{width:100%;padding:11px 14px;border:1px solid var(--b);border-radius:var(--r);font-size:14px;font-family:var(--f);outline:none}
+.fg .inp:focus,.fg select:focus{border-color:var(--p);box-shadow:0 0 0 2px var(--pl)}
+.fg .inp::placeholder,.fg .ta::placeholder{color:var(--m2)}
+.fg .ta{width:100%;padding:11px 14px;border:1px solid var(--b);border-radius:var(--r);font-size:14px;font-family:var(--f);outline:none;resize:vertical;min-height:80px;line-height:1.6}
+.fg .ta:focus{border-color:var(--p);box-shadow:0 0 0 2px var(--pl)}
+.fg .hint{font-size:11px;color:var(--m2);margin-top:2px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.ch-row{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.ch-idx{width:24px;height:24px;border-radius:50%;background:var(--pl);color:var(--p);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.ch-inp{flex:1;padding:9px 12px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f);outline:none}
+.ch-inp:focus{border-color:var(--p)}
+.ch-del{width:24px;height:24px;border-radius:50%;background:var(--bg);border:1px solid var(--b);color:var(--m2);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+.ch-add{width:100%;padding:10px;text-align:center;border:1.5px dashed var(--b);border-radius:var(--r);background:var(--s);color:var(--p);font-size:13px;font-weight:500;cursor:pointer;margin-top:4px}
+.ch-add:active{background:var(--pl)}
+.up-area{display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px;border:1.5px dashed var(--b);border-radius:var(--r);cursor:pointer}
+.up-area:active{background:var(--pl)}
+.up-area svg{width:24px;height:24px;color:var(--m2)}
+.up-area span{font-size:12px;color:var(--m2)}
+.sw-g{display:flex;align-items:center;gap:8px}
+.sw{width:44px;height:24px;border-radius:12px;background:var(--b);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.sw.on{background:var(--p)}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw.on::after{transform:translateX(20px)}
+.btn-p{width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:var(--rl);font-size:16px;font-weight:600;cursor:pointer}
+.btn-p:active{opacity:.85}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);color:#fff;padding:10px 22px;border-radius:8px;font-size:13px;z-index:999;display:none;text-align:center;pointer-events:none}
+</style>
+</head>
+<body>
+<div class="hd"><button class="hd-back" onclick="history.back()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><h1>发布课程</h1></div>
+<div class="fm">
+<div class="sg"><div class="sg-h">基本信息</div><div class="sg-b">
+<div class="fg"><label>课程名称 <span class="rq">*</span></label><input class="inp" id="courseName" placeholder="例：初一数学 · 暑期培优班"/></div>
+<div class="row2"><div class="fg"><label>学科/年级 <span class="rq">*</span></label><select id="courseGrade"><option>初一数学</option><option>初二数学</option><option>初三数学</option><option>初一英语</option><option>初二英语</option><option>初三英语</option><option>初二物理</option><option>初三物理</option><option>初三化学</option><option>高一数学</option><option>高一化学</option></select></div><div class="fg"><label>授课教师 <span class="rq">*</span></label><select id="courseTeacher"><option>张伟</option><option>李芳</option><option>王强</option><option>陈敏</option><option>赵丽</option></select></div></div>
+<div class="row2"><div class="fg"><label>总课时</label><input class="inp" type="number" id="courseHours" value="16" min="1" max="99"/></div><div class="fg"><label>课程定价 <span class="rq">*</span></label><input class="inp" type="number" id="coursePrice" value="1280" placeholder="元"/></div></div>
+<div class="fg"><label>购买赠送积分</label><input class="inp" type="number" id="coursePoints" value="100"/><div class="hint">学员购买后自动获赠的积分</div></div>
+</div></div>
+<div class="sg"><div class="sg-h">课程详情</div><div class="sg-b">
+<div class="fg"><label>课程简介 <span class="rq">*</span></label><textarea class="ta" id="courseDesc" placeholder="描述课程内容、适合学生群体、教学目标..."></textarea></div>
+<div class="fg"><label>课程大纲 / 章节</label>
+<div id="chapterList">
+<div class="ch-row"><span class="ch-idx">1</span><input class="inp ch-inp" placeholder="输入章节名称"/><button class="ch-del" onclick="this.parentElement.remove();reindex()">X</button></div>
+<div class="ch-row"><span class="ch-idx">2</span><input class="inp ch-inp" placeholder="输入章节名称"/><button class="ch-del" onclick="this.parentElement.remove();reindex()">X</button></div>
+<div class="ch-row"><span class="ch-idx">3</span><input class="inp ch-inp" placeholder="输入章节名称"/><button class="ch-del" onclick="this.parentElement.remove();reindex()">X</button></div>
+</div>
+<button class="ch-add" onclick="addChapter()">+ 添加章节</button>
+</div></div></div>
+<div class="sg"><div class="sg-h">封面与上架</div><div class="sg-b">
+<div class="fg"><label>课程封面</label>
+<div class="up-area" onclick="document.getElementById('fileCover').click()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>上传封面图片（建议 16:9）</span></div>
+<input type="file" id="fileCover" accept="image/*" style="display:none"/>
+</div>
+<div class="fg"><label>上架设置</label><div class="sw-g"><span class="sw on" id="pubToggle" onclick="this.classList.toggle('on')"></span><span style="font-size:13px;color:var(--m2)">发布后立即上架</span></div></div>
+</div></div>
+<button class="btn-p" onclick="doPublish()">确认发布课程</button>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+function toast(m){var t=document.getElementById("toast");t.textContent=m;t.style.display="block";setTimeout(function(){t.style.display="none"},1600);}
+function addChapter(){var l=document.getElementById("chapterList");var items=l.querySelectorAll(".ch-row");var d=document.createElement("div");d.className="ch-row";d.innerHTML='<span class="ch-idx">'+(items.length+1)+'</span><input class="inp ch-inp" placeholder="输入章节名称"/><button class="ch-del" onclick="this.parentElement.remove();reindex()">X</button>';l.appendChild(d);}
+function reindex(){var items=document.querySelectorAll("#chapterList .ch-row");items.forEach(function(e,i){e.querySelector(".ch-idx").textContent=i+1;});}
+function doPublish(){var n=document.getElementById("courseName").value.trim();if(!n){toast("请输入课程名称");return;}toast("课程《"+n+"》发布成功！");setTimeout(function(){history.back()},1600);}
+</script>
+</body></html>

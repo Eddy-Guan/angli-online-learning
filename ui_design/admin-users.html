@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>用户管理 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--m:#999;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* Header */
+.hd{display:flex;align-items:center;padding:10px 16px;background:var(--s)}
+.hd-back{display:flex;align-items:center;gap:4px;background:none;border:none;padding:4px 0;cursor:pointer;color:var(--fg);font-size:15px;-webkit-tap-highlight-color:transparent}
+.hd-back svg{width:22px;height:22px}
+.hd h1{flex:1;text-align:center;font-size:18px;font-weight:700;letter-spacing:-0.3px;margin-right:28px}
+
+/* Search */
+.srch{margin:10px 16px;position:relative}
+.srch svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--m2);pointer-events:none}
+.srch input{width:100%;padding:9px 12px 9px 36px;border:1px solid var(--b);border-radius:20px;background:var(--s);font-size:13px;color:var(--fg);outline:none}
+.srch input::placeholder{color:var(--m2)}
+.srch input:focus{border-color:var(--p);box-shadow:0 0 0 2px var(--pl)}
+
+/* Tabs */
+.tb{display:flex;margin:0 16px 8px;background:var(--s);border-radius:var(--r);border:1px solid var(--b);overflow:hidden}
+.tb-i{flex:1;text-align:center;padding:9px 0;font-size:12px;font-weight:500;color:var(--m2);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;position:relative}
+.tb-i.on{background:var(--p);color:#fff;font-weight:600}
+.tb-i:not(.on):active{background:var(--pl);color:var(--p)}
+
+/* Count summary */
+.cnt{border:1px solid var(--b);background:var(--s);border-radius:var(--rl);margin:0 16px 10px;padding:12px 14px;display:flex;gap:12px}
+.cnt-i{flex:1;text-align:center;position:relative}
+.cnt-i:not(:last-child)::after{content:"";position:absolute;right:0;top:4px;bottom:4px;width:1px;background:var(--b)}
+.cnt-i .n{font-size:22px;font-weight:700;color:var(--p)}
+.cnt-i .l{font-size:11px;color:var(--m2);margin-top:1px}
+
+/* User list */
+.ul{padding:0 16px;display:flex;flex-direction:column;gap:8px}
+.ui{display:flex;align-items:center;gap:10px;background:var(--s);border-radius:var(--rl);border:1px solid var(--b);padding:12px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .1s}
+.ui:active{background:#fafafa}
+.ui .av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-weight:600;color:#fff}
+.ui .av.c1{background:var(--p)}.ui .av.c2{background:#2196f3}
+.ui .av.c3{background:#4caf50}.ui .av.c4{background:#9c27b0}
+.ui .av.c5{background:#ff9800}.ui .av.c6{background:#e91e63}
+.ui .ub{flex:1;min-width:0}
+.ui .ub .un{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
+.ui .ub .un .tag{font-size:10px;padding:1px 6px;border-radius:4px;font-weight:500}
+.ui .ub .un .tag.t1{background:var(--pl);color:var(--p)}
+.ui .ub .un .tag.t2{background:#e3f2fd;color:#2196f3}
+.ui .ub .un .tag.t3{background:#e8f5e9;color:#4caf50}
+.ui .ub .un .tag.t4{background:#fff3e0;color:#ff9800}
+.ui .ub .un .tag.t5{background:#fce4ec;color:#e91e63}
+.ui .ub .un .tag.t6{background:var(--p);color:#fff}
+.ui .ub .um{font-size:11px;color:var(--m2);margin-top:2px}
+.ui .ur{text-align:right;flex-shrink:0}
+.ui .ur .s{font-size:10px;padding:2px 6px;border-radius:4px;font-weight:500}
+.ui .ur .s.s1{background:#e8f5e9;color:#4caf50}
+.ui .ur .s.s2{background:var(--pl);color:var(--p)}
+.ui .ur .s.s3{background:#fce4ec;color:#e91e63}
+.ui .ur .s.s4{background:var(--bg);color:var(--m2)}
+
+/* Review actions */
+.rv-act{display:flex;gap:6px;margin-top:4px}
+.rv-act button{padding:4px 10px;border-radius:4px;font-size:11px;font-weight:500;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent;font-family:var(--f)}
+.rv-act .ok{background:#e8f5e9;color:#4caf50}
+.rv-act .no{background:#fce4ec;color:#e91e63}
+.rv-act .vw{background:var(--pl);color:var(--p)}
+.rv-act button:active{opacity:.7}
+
+/* Empty */
+.empty{padding:40px;text-align:center;font-size:13px;color:var(--m2)}
+</style></head><body>
+
+<div class="hd">
+  <button class="hd-back" onclick="history.back()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <h1>用户管理</h1>
+</div>
+
+<div class="srch">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+  <input type="text" placeholder="搜索用户姓名、手机号…" id="searchInput" oninput="filterUsers()"/>
+</div>
+
+<div class="cnt">
+  <div class="cnt-i"><div class="n" id="countNormal">6,842</div><div class="l">普通用户</div></div>
+  <div class="cnt-i"><div class="n" id="countTeacher">48</div><div class="l">在职老师</div></div>
+  <div class="cnt-i"><div class="n" id="countPending">6</div><div class="l">待审核</div></div>
+</div>
+
+<div class="tb" id="mainTabs">
+  <div class="tb-i on" data-tab="0" onclick="switchTab(0)">普通用户</div>
+  <div class="tb-i" data-tab="1" onclick="switchTab(1)">在职老师</div>
+  <div class="tb-i" data-tab="2" onclick="switchTab(2)">审核申请 <span style="background:#dc2626;color:#fff;border-radius:9px;padding:1px 6px;font-size:10px;margin-left:2px">6</span></div>
+</div>
+
+<!-- ===== Tab 0: 普通用户 ===== -->
+<div class="pg" id="tab0">
+<div class="ul">
+  <div class="ui"><div class="av c1">李</div><div class="ub"><div class="un">李明妈妈 <span class="tag t1">家长</span></div><div class="um">孩子：李宇明 · 初一数学 · 注册 2025-03</div></div><div class="ur"><span class="s s1">已认证</span></div></div>
+  <div class="ui"><div class="av c2">张</div><div class="ub"><div class="un">张雪婷爸爸 <span class="tag t1">家长</span></div><div class="um">孩子：张明轩 · 初二英语 · 注册 2025-01</div></div><div class="ur"><span class="s s1">已认证</span></div></div>
+  <div class="ui"><div class="av c3">王</div><div class="ub"><div class="un">王建国先生 <span class="tag t1">家长</span></div><div class="um">孩子：王子涵 · 初三物理 · 注册 2024-09</div></div><div class="ur"><span class="s s1">已认证</span></div></div>
+  <div class="ui"><div class="av c4">陈</div><div class="ub"><div class="un">陈思睿妈妈 <span class="tag t1">家长</span></div><div class="um">孩子：陈思睿 · 高一化学 · 注册 2025-06</div></div><div class="ur"><span class="s s2">待认证</span></div></div>
+  <div class="ui"><div class="av c1">刘</div><div class="ub"><div class="un">刘佳琪爸爸 <span class="tag t1">家长</span></div><div class="um">孩子：刘佳琪 · 初二数学 · 注册 2024-11</div></div><div class="ur"><span class="s s1">已认证</span></div></div>
+</div>
+</div>
+
+<!-- ===== Tab 1: 在职老师 ===== -->
+<div class="pg" id="tab1" style="display:none">
+<div class="ul">
+  <div class="ui"><div class="av c2">张</div><div class="ub"><div class="un">张伟 <span class="tag t6">老师</span><span class="tag t2">数学</span><span class="tag t3">金牌讲师</span></div><div class="um">教龄8年 · 授课42门 · 评分4.9</div></div><div class="ur"><span class="s s1">在职</span></div></div>
+  <div class="ui"><div class="av c5">李</div><div class="ub"><div class="un">李芳 <span class="tag t6">老师</span><span class="tag t2">英语</span><span class="tag t4">资深</span></div><div class="um">教龄10年 · 授课36门 · 评分4.8</div></div><div class="ur"><span class="s s1">在职</span></div></div>
+  <div class="ui"><div class="av c6">王</div><div class="ub"><div class="un">王强 <span class="tag t6">老师</span><span class="tag t2">物理</span><span class="tag t3">竞赛教练</span></div><div class="um">教龄6年 · 授课28门 · 评分4.9</div></div><div class="ur"><span class="s s1">在职</span></div></div>
+  <div class="ui"><div class="av c3">陈</div><div class="ub"><div class="un">陈敏 <span class="tag t6">老师</span><span class="tag t2">化学</span><span class="tag t4">985硕士</span></div><div class="um">教龄5年 · 授课20门 · 评分4.7</div></div><div class="ur"><span class="s s1">在职</span></div></div>
+  <div class="ui"><div class="av c4">赵</div><div class="ub"><div class="un">赵丽 <span class="tag t6">老师</span><span class="tag t2">语文</span></div><div class="um">教龄4年 · 授课15门 · 评分4.6</div></div><div class="ur"><span class="s s1">在职</span></div></div>
+</div>
+</div>
+
+<!-- ===== Tab 2: 审核申请 ===== -->
+<div class="pg" id="tab2" style="display:none">
+<div class="ul">
+  <div class="ui"><div class="av c1">刘</div><div class="ub"><div class="un">刘芳 <span class="tag t6">老师</span><span class="tag t5">待审</span></div><div class="um">提交 07-14</div><div class="rv-act"><button class="vw">查看</button><button class="ok">✓ 通过</button><button class="no">✕ 驳回</button></div></div></div>
+  <div class="ui"><div class="av c2">黄</div><div class="ub"><div class="un">黄志强 <span class="tag t6">老师</span><span class="tag t5">待审</span></div><div class="um">提交 07-13</div><div class="rv-act"><button class="vw">查看</button><button class="ok">✓ 通过</button><button class="no">✕ 驳回</button></div></div></div>
+  <div class="ui"><div class="av c5">何</div><div class="ub"><div class="un">何思语 <span class="tag t6">老师</span><span class="tag t5">待审</span></div><div class="um">提交 07-12</div><div class="rv-act"><button class="vw">查看</button><button class="ok">✓ 通过</button><button class="no">✕ 驳回</button></div></div></div>
+  <div class="ui"><div class="av c3">周</div><div class="ub"><div class="un">周敏 <span class="tag t6">老师</span><span class="tag t5">待审</span></div><div class="um">提交 07-11</div><div class="rv-act"><button class="vw">查看</button><button class="ok">✓ 通过</button><button class="no">✕ 驳回</button></div></div></div>
+  <div class="ui"><div class="av c6">吴</div><div class="ub"><div class="un">吴晓明 <span class="tag t6">老师</span><span class="tag t5">待审</span></div><div class="um">提交 07-10</div><div class="rv-act"><button class="vw">查看</button><button class="ok">✓ 通过</button><button class="no">✕ 驳回</button></div></div></div>
+  <div class="ui"><div class="av c4">郑</div><div class="ub"><div class="un">郑雅文 <span class="tag t6">老师</span><span class="tag t5">待审</span></div><div class="um">提交 07-09</div><div class="rv-act"><button class="vw">查看</button><button class="ok">✓ 通过</button><button class="no">✕ 驳回</button></div></div></div>
+</div>
+</div>
+
+<div style="height:20px"></div>
+
+<style>
+.pg{display:block}
+#tab1,#tab2{display:none}
+</style>
+
+<script>
+function switchTab(idx){
+  var tabs=document.querySelectorAll(".tb-i");
+  tabs.forEach(function(t,i){t.classList.toggle("on",i===idx);});
+  var pages=["tab0","tab1","tab2"];
+  pages.forEach(function(id,i){
+    var el=document.getElementById(id);
+    if(el)el.style.display=(i===idx?"block":"none");
+  });
+}
+
+function filterUsers(){
+  var q=document.getElementById("searchInput").value.trim().toLowerCase();
+  document.querySelectorAll(".pg .ui").forEach(function(el){
+    var text=el.textContent.toLowerCase();
+    el.style.display=(!q||text.indexOf(q)>=0)?"flex":"none";
+  });
+}
+</script>
+</body></html>

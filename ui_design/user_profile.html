@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>我的 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--m:#999;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--s)}
+.hd h1{font-size:19px;font-weight:700;letter-spacing:-0.3px}
+.hd-actions{display:flex;gap:16px;align-items:center}
+.hd-actions button{background:none;border:none;padding:4px;cursor:pointer;color:var(--m2)}
+.hd-actions button svg{display:block;width:22px;height:22px}
+.profile{background:var(--s);padding:20px 16px;display:flex;gap:14px;align-items:center}
+.av{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--pl);color:var(--p);flex-shrink:0}
+.av svg{width:28px;height:28px}
+.pi h2{font-size:18px;font-weight:700}
+.pi p{font-size:12px;color:var(--m2);margin-top:1px;display:flex;align-items:center;gap:4px}
+.pi p svg{width:12px;height:12px}
+.stats{display:flex;background:var(--s);border-top:1px solid var(--b);padding:2px 0}
+.st{flex:1;text-align:center;padding:14px 0;border-right:1px solid var(--b)}
+.st:last-child{border-right:none}
+.st .n{font-size:20px;font-weight:700;color:var(--p)}
+.st .l{font-size:11px;color:var(--m2);margin-top:2px}
+.mg{background:var(--s);margin-top:12px;border-top:1px solid var(--b);border-bottom:1px solid var(--b)}
+.mi{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--b);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.mi:last-child{border-bottom:none}
+.mi:active{background:#fafafa}
+.mi .ic{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mi .ic svg{width:18px;height:18px}
+.mi .ic.ic-o{background:#fde8e1;color:var(--p)}
+.mi .ic.ic-c{background:#fff3e0;color:#ff9800}
+.mi .ic.ic-h{background:#fce4ec;color:#e91e63}
+.mi .ic.ic-b{background:#e3f2fd;color:#2196f3}
+.mi .ic.ic-n{background:#e8f5e9;color:#4caf50}
+.mi .ic.ic-k{background:#fff3e0;color:#ff9800}
+.mi .ic.ic-s{background:#f3e5f5;color:#9c27b0}
+.mi .lb{flex:1;font-size:14px;font-weight:500}
+.mi .bd{padding:2px 7px;background:var(--p);color:#fff;border-radius:10px;font-size:10px;font-weight:600;min-width:18px;text-align:center}
+.mi .ar{color:var(--m2);flex-shrink:0;display:flex}
+.mi .ar svg{width:16px;height:16px}
+.logout{margin:20px 16px;padding:12px;text-align:center;background:var(--s);border:1px solid var(--b);border-radius:12px;color:#dc2626;font-size:14px;font-weight:500;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.logout:active{background:#fef2f2}
+.bn{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:6px 0 16px;background:var(--s);border-top:1px solid var(--b);z-index:100}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--m2);text-decoration:none;transition:color .15s;-webkit-tap-highlight-color:transparent;padding:2px 12px}
+.ni svg{width:24px;height:24px;color:var(--m2);transition:color .15s}
+.ni.on{color:var(--p)}
+.ni.on svg{color:var(--p)}
+.bn-spacer{height:80px}
+</style></head><body>
+<div class="hd"><h1>我的</h1><div class="hd-actions"><button aria-label="设置" onclick="location.href='settings.html'"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button></div></div>
+
+<div class="profile"><div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div><div class="pi"><h2>李明</h2><p><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>家长 · 已绑定2个孩子</p></div></div>
+
+<div class="stats"><div class="st"><div class="n">12</div><div class="l">已购课程</div></div><div class="st"><div class="n">86</div><div class="l">累计课时</div></div><div class="st"><div class="n">4,280</div><div class="l">积分</div></div></div>
+
+<div class="mg">
+<div class="mi"><div class="ic ic-o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><span class="lb">我的订单</span><span class="bd">2</span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>
+<div class="mi"><div class="ic ic-c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="lb">我的收藏</span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>
+<div class="mi"><div class="ic ic-h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div><span class="lb">优惠券</span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>
+</div>
+
+<div class="mg">
+<div class="mi"><div class="ic ic-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><span class="lb">学习报告</span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>
+<div class="mi"><div class="ic ic-n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div><span class="lb">消息通知</span><span class="bd">3</span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>
+<div class="mi"><div class="ic ic-k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="lb">绑定孩子</span><span class="bd">2</span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>
+<div class="mi"><div class="ic ic-s"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></div><span class="lb">设置</span><span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></span></div>
+</div>
+
+<div class="logout">退出登录</div>
+<div class="bn-spacer"></div>
+<nav class="bn"><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>首页</span></a><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>课程</span></a><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>学习</span></a><a class="ni on" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>我的</span></a></nav>
+</body></html>

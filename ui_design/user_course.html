@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>课程 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--m:#999;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--s)}
+.hd h1{font-size:19px;font-weight:700;letter-spacing:-0.3px}
+.hd-actions{display:flex;gap:16px;align-items:center}
+.hd-actions button{background:none;border:none;padding:4px;cursor:pointer;color:var(--m2)}
+.hd-actions button svg{display:block;width:22px;height:22px}
+.search{margin:10px 16px 6px;position:relative}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--m2);pointer-events:none}
+.search input{width:100%;padding:9px 12px 9px 36px;border:1px solid var(--b);border-radius:20px;background:var(--s);font-size:13px;color:var(--fg);outline:none}
+.search input::placeholder{color:var(--m2)}
+.search input:focus{border-color:var(--p);box-shadow:0 0 0 2px var(--pl)}
+.tb{display:flex;background:var(--s);padding:0 16px;border-bottom:1px solid var(--b);gap:0}
+.t{flex:1;text-align:center;font-size:14px;padding:10px 0;border-bottom:2px solid transparent;color:var(--m2);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s}
+.t.on{color:var(--p);border-bottom-color:var(--p);font-weight:600}
+.ci{display:flex;gap:12px;background:var(--s);margin:8px 16px;padding:14px;border-radius:12px;border:1px solid var(--b);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .15s ease}
+.ci:active{transform:scale(.98)}
+.ci .th{width:72px;height:72px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ci .th svg{width:28px;height:28px}
+.ci .th.th-math{background:linear-gradient(135deg,#fde8e1,#fef3ed)}
+.ci .th.th-eng{background:linear-gradient(135deg,#e3f2fd,#eef5ff)}
+.ci .th.th-phy{background:linear-gradient(135deg,#fff3e0,#fff8e6)}
+.ci .th.th-chem{background:linear-gradient(135deg,#f3e5f5,#faf0fc)}
+.ci .in{flex:1;min-width:0}
+.ci h4{font-size:15px;font-weight:600;margin-bottom:2px;line-height:1.3}
+.ci .tr{font-size:12px;color:var(--m2);display:flex;align-items:center;gap:4px}
+.ci .tr svg{width:12px;height:12px}
+.ci .meta{font-size:11px;color:var(--m2);margin-top:4px;display:flex;align-items:center;gap:12px}
+.ci .meta span{display:flex;align-items:center;gap:3px}
+.ci .meta svg{width:11px;height:11px}
+.ci .btm{display:flex;justify-content:space-between;align-items:center;margin-top:4px}
+.ci .pr{font-size:15px;font-weight:700;color:var(--p)}
+.ci .pr s{font-size:11px;color:var(--m);font-weight:400;margin-left:4px}
+.ci .tag{display:inline-flex;align-items:center;gap:2px;padding:2px 6px;background:var(--pl);color:var(--p);border-radius:4px;font-size:10px;font-weight:500}
+.bn{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:6px 0 16px;background:var(--s);border-top:1px solid var(--b);z-index:100}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--m2);text-decoration:none;transition:color .15s;-webkit-tap-highlight-color:transparent;padding:2px 12px}
+.ni svg{width:24px;height:24px;color:var(--m2);transition:color .15s}
+.ni.on{color:var(--p)}
+.ni.on svg{color:var(--p)}
+.bn-spacer{height:80px}
+</style></head><body>
+<div class="hd"><h1>全部课程</h1><div class="hd-actions"><button aria-label="筛选"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg></button></div></div>
+<div class="search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg><input type="text" placeholder="搜索课程或老师…"/></div>
+<div class="tb" id="tabs"><span class="t on" data-tab="0" onclick="switchTab(this,0)">推荐</span><span class="t" data-tab="1" onclick="switchTab(this,1)">最新</span><span class="t" data-tab="2" onclick="switchTab(this,2)">热门</span></div>
+<div id="courseList">
+<div class="ci"><div class="th th-math"><svg viewBox="0 0 24 24" fill="none" stroke="#F05A22" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div><div class="in"><h4>初一数学 · 暑期培优班</h4><div class="tr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>张老师 · 昂立金牌讲师</div><div class="meta"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>7月15日开课</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>38人报名</span></div><div class="btm"><span class="pr">¥1,280 <s>¥1,880</s></span><span class="tag">推荐</span></div></div></div>
+<div class="ci"><div class="th th-eng"><svg viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div><div class="in"><h4>初二英语 · 语法突破班</h4><div class="tr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>李老师 · 10年教龄</div><div class="meta"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>7月20日开课</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>42人报名</span></div><div class="btm"><span class="pr">¥960 <s>¥1,460</s></span><span class="tag">推荐</span></div></div></div>
+<div class="ci"><div class="th th-phy"><svg viewBox="0 0 24 24" fill="none" stroke="#ff9800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M2 12h20"/><path d="M20 12a8 8 0 0 1-8 8"/><path d="M12 4a8 8 0 0 1 8 8"/><path d="M4 12a8 8 0 0 0 8 8"/></svg></div><div class="in"><h4>初三物理 · 力学专题</h4><div class="tr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>王老师 · 物理竞赛教练</div><div class="meta"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>7月18日开课</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>56人报名</span></div><div class="btm"><span class="pr">¥1,120 <s>¥1,620</s></span><span class="tag">热门</span></div></div></div>
+<div class="ci"><div class="th th-chem"><svg viewBox="0 0 24 24" fill="none" stroke="#9c27b0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="4" rx="8" ry="2"/><path d="M4 4v4c0 1.1 2 2 8 2s8-.9 8-2V4"/><path d="M4 8v4c0 1.1 2 2 8 2s8-.9 8-2V8"/><path d="M4 12v4c0 1.1 2 2 8 2s8-.9 8-2v-4"/><path d="M4 16v4c0 1.1 2 2 8 2s8-.9 8-2v-4"/></svg></div><div class="in"><h4>高一化学 · 预科入门</h4><div class="tr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>陈老师 · 985硕士</div><div class="meta"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>8月1日开课</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>25人报名</span></div><div class="btm"><span class="pr">¥800 <s>¥1,200</s></span><span class="tag">新</span></div></div></div>
+</div>
+<div class="bn-spacer"></div>
+<nav class="bn"><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>首页</span></a><a class="ni on" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>课程</span></a><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>学习</span></a><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>我的</span></a></nav>
+<script>
+function switchTab(el, idx) {
+  document.querySelectorAll(".t").forEach(function(t) { t.classList.remove("on"); });
+  el.classList.add("on");
+}
+</script>
+</body></html>

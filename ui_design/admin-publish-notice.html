@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>发布公告 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hd{display:flex;align-items:center;padding:10px 16px;background:var(--s)}
+.hd-back{display:flex;align-items:center;gap:4px;background:none;border:none;padding:4px 0;cursor:pointer;color:var(--fg);font-size:15px}
+.hd-back svg{width:22px;height:22px}
+.hd h1{flex:1;text-align:center;font-size:18px;font-weight:700;letter-spacing:-0.3px;margin-right:28px}
+.fm{padding:16px}
+.sg{background:var(--s);border-radius:var(--rl);border:1px solid var(--b);overflow:hidden;margin-bottom:12px}
+.sg-h{padding:14px 16px 10px;font-size:13px;font-weight:600;border-bottom:1px solid var(--b)}
+.sg-b{padding:10px 16px 14px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:14px}
+.fg:last-child{margin-bottom:0}
+.fg label{font-size:12px;font-weight:600}
+.fg .rq{color:#dc2626;margin-left:2px}
+.fg .inp,.fg select{width:100%;padding:11px 14px;border:1px solid var(--b);border-radius:var(--r);font-size:14px;font-family:var(--f);outline:none}
+.fg .inp:focus,.fg select:focus{border-color:var(--p);box-shadow:0 0 0 2px var(--pl)}
+.fg .inp::placeholder,.fg .ta::placeholder{color:var(--m2)}
+.fg .ta{width:100%;padding:11px 14px;border:1px solid var(--b);border-radius:var(--r);font-size:14px;font-family:var(--f);outline:none;resize:vertical;min-height:120px;line-height:1.6}
+.fg .ta:focus{border-color:var(--p);box-shadow:0 0 0 2px var(--pl)}
+.obj-g{display:flex;gap:8px}
+.obj{flex:1;padding:12px 8px;border:2px solid var(--b);border-radius:var(--r);text-align:center;cursor:pointer;transition:all .15s}
+.obj:active{transform:scale(.97)}
+.obj.on{border-color:var(--p);background:var(--pl)}
+.obj .oc{font-size:22px;display:block;margin-bottom:2px}
+.obj span:last-child{font-size:12px;font-weight:600}
+.up-area{display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px;border:1.5px dashed var(--b);border-radius:var(--r);cursor:pointer}
+.up-area:active{background:var(--pl)}
+.up-area svg{width:28px;height:28px;color:var(--m2)}
+.up-area span{font-size:13px;color:var(--m2)}
+.sw-g{display:flex;align-items:center;gap:8px}
+.sw{width:44px;height:24px;border-radius:12px;background:var(--b);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0}
+.sw.on{background:var(--p)}
+.sw::after{content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw.on::after{transform:translateX(20px)}
+.btn-p{width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:var(--rl);font-size:16px;font-weight:600;cursor:pointer}
+.btn-p:active{opacity:.85}
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);color:#fff;padding:10px 22px;border-radius:8px;font-size:13px;z-index:999;display:none;text-align:center;pointer-events:none}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <button class="hd-back" onclick="history.back()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <h1>发布公告</h1>
+</div>
+
+<div class="fm">
+  <div class="sg">
+    <div class="sg-h">公告内容</div>
+    <div class="sg-b">
+      <div class="fg">
+        <label>公告标题 <span class="rq">*</span></label>
+        <input class="inp" id="noticeTitle" placeholder="请输入公告标题"/>
+      </div>
+      <div class="fg">
+        <label>公告内容 <span class="rq">*</span></label>
+        <textarea class="ta" id="noticeContent" placeholder="请输入公告内容..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="sg">
+    <div class="sg-h">推送设置</div>
+    <div class="sg-b">
+      <div class="fg">
+        <label>推送对象</label>
+        <div class="obj-g">
+          <div class="obj on" onclick="selObj(this)"><span class="oc">👥</span><span>全部用户</span></div>
+          <div class="obj" onclick="selObj(this)"><span class="oc">👨‍👩‍👧‍👦</span><span>家长</span></div>
+          <div class="obj" onclick="selObj(this)"><span class="oc">👩‍🏫</span><span>老师</span></div>
+        </div>
+      </div>
+      <div class="fg">
+        <label>有效期至</label>
+        <input class="inp" type="date" id="noticeExpire" value="2026-08-01"/>
+      </div>
+      <div class="fg">
+        <label>是否置顶</label>
+        <div class="sw-g">
+          <span class="sw on" onclick="this.classList.toggle('on')"></span>
+          <span style="font-size:13px;color:var(--m2)">置顶展示在公告栏顶部</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sg">
+    <div class="sg-h">附件（选填）</div>
+    <div class="sg-b">
+      <div class="up-area" onclick="document.getElementById('fileNotice').click()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+        <span>点击上传文件或图片</span>
+      </div>
+      <input type="file" id="fileNotice" style="display:none"/>
+    </div>
+  </div>
+
+  <button class="btn-p" onclick="doPublish()">确认发布公告</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function toast(m){
+  var t=document.getElementById("toast");
+  t.textContent=m;t.style.display="block";
+  setTimeout(function(){t.style.display="none"},1600);
+}
+function selObj(el){
+  document.querySelectorAll(".obj").forEach(function(o){o.classList.remove("on");});
+  el.classList.add("on");
+}
+function doPublish(){
+  var t=document.getElementById("noticeTitle").value.trim();
+  var c=document.getElementById("noticeContent").value.trim();
+  if(!t||!c){toast("请填写标题和内容");return;}
+  toast("公告已发布！");
+  setTimeout(function(){history.back()},1600);
+}
+</script>
+</body></html>

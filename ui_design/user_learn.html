@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>学习 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--m:#999;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--s)}
+.hd h1{font-size:19px;font-weight:700;letter-spacing:-0.3px}
+.hd a{font-size:13px;color:var(--m2);text-decoration:none;display:flex;align-items:center;gap:4px}
+.hd a svg{width:14px;height:14px}
+.cc{margin:10px 16px;background:var(--s);border-radius:12px;border:1px solid var(--b);overflow:hidden}
+.cc-h{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.cc-h:active{background:#fafafa}
+.cc-h .th{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cc-h .th svg{width:22px;height:22px}
+.cc-h .th.th-math{background:linear-gradient(135deg,#fde8e1,#fef3ed);color:#F05A22}
+.cc-h .th.th-eng{background:linear-gradient(135deg,#e3f2fd,#eef5ff);color:#2196f3}
+.cc-h .in{flex:1;min-width:0}
+.cc-h .in h4{font-size:14px;font-weight:600;margin-bottom:1px}
+.cc-h .in .mt{font-size:11px;color:var(--m2)}
+.cc-h .ar{font-size:12px;color:var(--m2);transition:transform .2s;flex-shrink:0}
+.cc-h .ar.open{transform:rotate(180deg)}
+.cc-b{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.cc-b.open{max-height:2000px}
+.pc{padding:0 14px 14px}
+.ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-top:4px;border-top:1px solid var(--b)}
+.ph .pt{font-size:14px;font-weight:600}
+.ph .pct{font-size:16px;font-weight:700;color:var(--p)}
+.pb{height:5px;background:var(--pl);border-radius:3px;overflow:hidden;margin-bottom:8px}
+.pb .fl{height:100%;background:var(--p);border-radius:3px;transition:width .5s ease}
+.ps{display:flex;gap:14px;margin-bottom:10px;font-size:11px;color:var(--m2)}
+.ps span{display:flex;align-items:center;gap:3px}
+.ps svg{width:12px;height:12px;flex-shrink:0}
+.li{display:flex;gap:10px;margin-bottom:5px;padding:9px 10px;background:#fafafa;border-radius:8px;align-items:center}
+.li .no{width:24px;height:24px;background:var(--pl);color:var(--p);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;flex-shrink:0}
+.li .no.done{background:var(--p);color:#fff}
+.li .no.current{border:2px solid var(--p);background:#fff;color:var(--p)}
+.li .in{flex:1;min-width:0}
+.li h4{font-size:12px;font-weight:600;margin-bottom:1px}
+.li .mt{font-size:10px;color:var(--m2)}
+.li .status{flex-shrink:0;font-size:10px;display:flex;align-items:center;gap:2px}
+.li .status svg{width:12px;height:12px}
+.rating-box{padding:12px;margin:10px 0 0;background:#fffbeb;border-radius:8px;border:1px solid #ffe58f}
+.rating-box .rt{font-size:12px;font-weight:600;margin-bottom:4px}
+.rating-box .rm{font-size:11px;color:var(--m2);margin-bottom:6px}
+.star{display:flex;gap:3px;margin-bottom:2px}
+.star .s{font-size:24px;cursor:pointer;color:#ddd;transition:color .1s;-webkit-tap-highlight-color:transparent}
+.star .s.on{color:#ff9500}
+.rating-txt{font-size:11px;color:var(--m2)}
+.bn{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:6px 0 16px;background:var(--s);border-top:1px solid var(--b);z-index:100}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--m2);text-decoration:none;transition:color .15s;-webkit-tap-highlight-color:transparent;padding:2px 12px}
+.ni svg{width:24px;height:24px;color:var(--m2);transition:color .15s}
+.ni.on{color:var(--p)}
+.ni.on svg{color:var(--p)}
+.bn-spacer{height:80px}
+</style></head><body>
+<div class="hd"><h1>我的学习</h1><a href="#">学习报告<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></a></div>
+
+<div class="cc">
+<div class="cc-h" onclick="toggleCourse(this)">
+<div class="th th-math"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></div>
+<div class="in"><h4>初一数学 · 暑期培优班</h4><div class="mt">张伟老师 · 16课时</div></div>
+<span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+</div>
+<div class="cc-b">
+<div class="pc">
+<div class="ph"><span class="pt">学习进度</span><span class="pct">65%</span></div>
+<div class="pb"><div class="fl" style="width:65%"></div></div>
+<div class="ps"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>已学 8/12 课时</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>作业 5/8</span><span>⭐ 4.8</span></div>
+<div class="li"><div class="no done">1</div><div class="in"><h4>有理数的运算</h4><div class="mt">已完成 · 得分 92</div></div><span class="status" style="color:#34c759"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+<div class="li"><div class="no done">2</div><div class="in"><h4>整式的加减</h4><div class="mt">已完成 · 得分 88</div></div><span class="status" style="color:#34c759"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+<div class="li"><div class="no done">3</div><div class="in"><h4>一元一次方程</h4><div class="mt">已完成 · 得分 95</div></div><span class="status" style="color:#34c759"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+<div class="li"><div class="no done">4</div><div class="in"><h4>二元一次方程组</h4><div class="mt">已完成 · 得分 78</div></div><span class="status" style="color:#34c759"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+<div class="li"><div class="no current">5</div><div class="in"><h4>不等式与不等式组</h4><div class="mt">进行中</div></div><span class="status" style="color:var(--p)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span></div>
+<div class="li"><div class="no">6</div><div class="in"><h4>平面直角坐标系</h4><div class="mt">待学习</div></div><span class="status" style="color:var(--m2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span></div>
+<div class="rating-box">
+<div class="rt">给张伟老师评分</div>
+<div class="rm">请对该课程的教学质量进行评价</div>
+<div class="star" data-course="math1">
+<span class="s" onclick="setStar(this,1)">★</span>
+<span class="s" onclick="setStar(this,2)">★</span>
+<span class="s" onclick="setStar(this,3)">★</span>
+<span class="s" onclick="setStar(this,4)">★</span>
+<span class="s" onclick="setStar(this,5)">★</span>
+</div>
+<div class="rating-txt" id="rt-math1">点击星星为老师评分</div>
+</div>
+</div></div></div>
+
+<div class="cc">
+<div class="cc-h" onclick="toggleCourse(this)">
+<div class="th th-eng"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+<div class="in"><h4>初二英语 · 语法突破班</h4><div class="mt">李芳老师 · 12课时</div></div>
+<span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+</div>
+<div class="cc-b">
+<div class="pc">
+<div class="ph"><span class="pt">学习进度</span><span class="pct">42%</span></div>
+<div class="pb"><div class="fl" style="width:42%"></div></div>
+<div class="ps"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>已学 5/12 课时</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/></svg>作业 3/6</span><span>⭐ 4.6</span></div>
+<div class="li"><div class="no done">1</div><div class="in"><h4>词性基础</h4><div class="mt">已完成 · 得分 85</div></div><span class="status" style="color:#34c759"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+<div class="li"><div class="no done">2</div><div class="in"><h4>时态入门</h4><div class="mt">已完成 · 得分 82</div></div><span class="status" style="color:#34c759"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></span></div>
+<div class="li"><div class="no current">3</div><div class="in"><h4>被动语态</h4><div class="mt">进行中</div></div><span class="status" style="color:var(--p)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg></span></div>
+<div class="li"><div class="no">4</div><div class="in"><h4>从句入门</h4><div class="mt">待学习</div></div><span class="status" style="color:var(--m2)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></span></div>
+<div class="rating-box">
+<div class="rt">给李芳老师评分</div>
+<div class="rm">请对该课程的教学质量进行评价</div>
+<div class="star" data-course="eng1">
+<span class="s" onclick="setStar(this,1)">★</span>
+<span class="s" onclick="setStar(this,2)">★</span>
+<span class="s" onclick="setStar(this,3)">★</span>
+<span class="s" onclick="setStar(this,4)">★</span>
+<span class="s" onclick="setStar(this,5)">★</span>
+</div>
+<div class="rating-txt" id="rt-eng1">点击星星为老师评分</div>
+</div>
+</div></div></div>
+
+<div class="bn-spacer"></div>
+<nav class="bn"><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span>首页</span></a><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg><span>课程</span></a><a class="ni on" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>学习</span></a><a class="ni" href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>我的</span></a></nav>
+<script>
+function toggleCourse(el){
+  var body=el.nextElementSibling;
+  var arrow=el.querySelector(".ar");
+  body.classList.toggle("open");
+  arrow.classList.toggle("open");
+}
+function setStar(el,rating){
+  var container=el.parentElement;
+  var stars=container.querySelectorAll(".s");
+  var courseId=container.getAttribute("data-course");
+  for(var i=0;i<stars.length;i++){stars[i].classList.toggle("on",i<rating);}
+  var txt=document.getElementById("rt-"+courseId);
+  var msgs=["","😣 不满意","😐 一般","😊 满意","👍 很满意","❤️ 非常满意"];
+  if(txt)txt.textContent="你给老师评了 "+rating+" 星 — "+msgs[rating];
+}
+</script>
+</body></html>

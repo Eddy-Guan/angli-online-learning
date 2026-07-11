@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>今日总结 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--m:#999;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+
+/* Header */
+.hd{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:var(--s);border-bottom:1px solid var(--b)}
+.hd-l{display:flex;align-items:center;gap:10px}
+.hd-back{display:flex;align-items:center;gap:4px;background:none;border:none;padding:4px 0;cursor:pointer;color:var(--fg);font-size:14px;-webkit-tap-highlight-color:transparent}
+.hd-back svg{width:22px;height:22px;color:var(--fg)}
+.hd h1{font-size:18px;font-weight:700;letter-spacing:-0.3px}
+.hd-r{display:flex;align-items:center;gap:12px}
+.hd-r button{background:none;border:none;padding:4px;cursor:pointer;color:var(--m2)}
+.hd-r button svg{display:block;width:22px;height:22px}
+
+/* Date tabs */
+
+/* Summary list */
+.sl{padding:12px 16px 8px;display:flex;flex-direction:column;gap:12px}
+.sg{background:var(--s);border-radius:12px;border:1px solid var(--b);overflow:hidden}
+.sg-h{display:flex;align-items:center;gap:10px;padding:14px 14px 10px;border-bottom:1px solid var(--b);position:relative}
+.sg-h .ico{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sg-h .ico svg{width:22px;height:22px}
+.sg-h .ico.i1{background:linear-gradient(135deg,#fde8e1,#fef3ed);color:var(--p)}
+.sg-h .ico.i2{background:linear-gradient(135deg,#e3f2fd,#eef5ff);color:#2196f3}
+.sg-h .ico.i3{background:linear-gradient(135deg,#fff3e0,#fff8e6);color:#ff9800}
+.sg-h .ico.i4{background:linear-gradient(135deg,#e8f5e9,#eef9ee);color:#4caf50}
+.sg-h .info{flex:1;min-width:0}
+.sg-h .info h3{font-size:14px;font-weight:600;line-height:1.3;margin-bottom:1px}
+.sg-h .info .tm{font-size:11px;color:var(--m2)}
+.sg-h .badge{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;padding:0 5px;background:var(--p);color:#fff;border-radius:9px;font-size:10px;font-weight:600;flex-shrink:0}
+
+/* Message items inside course group */
+.sg-b{padding:10px 14px 14px;display:flex;flex-direction:column;gap:8px}
+.msg{display:flex;gap:10px;padding:10px 12px;background:#fafafa;border-radius:10px;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:background .15s}
+.msg:active{background:#f0f0f0}
+.msg .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;font-weight:600;color:#fff}
+.msg .av.a1{background:var(--p)}
+.msg .av.a2{background:#2196f3}
+.msg .av.a3{background:#4caf50}
+.msg .av.a4{background:#9c27b0}
+.msg .av.a5{background:#ff9800}
+.msg .mb{flex:1;min-width:0}
+.msg .mb .mn{display:flex;align-items:center;justify-content:space-between;margin-bottom:2px}
+.msg .mb .mn .nn{font-size:12px;font-weight:600;color:var(--fg)}
+.msg .mb .mn .tt{font-size:10px;color:var(--m2)}
+.msg .mb .mp{font-size:12px;color:var(--m2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;word-break:break-all}
+.msg .mb .mp.open{-webkit-line-clamp:unset}
+.msg .mb .tag{display:inline-flex;align-items:center;gap:3px;padding:2px 6px;background:var(--pl);color:var(--p);border-radius:4px;font-size:10px;margin-top:4px}
+.msg .unread{width:8px;height:8px;border-radius:50%;background:var(--p);flex-shrink:0;margin-top:4px}
+
+/* Empty state */
+.empty{text-align:center;padding:60px 16px}
+.empty svg{width:56px;height:56px;color:var(--b);margin-bottom:12px}
+.empty p{font-size:14px;color:var(--m2);line-height:1.6}
+
+/* Detail overlay */
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--s);z-index:200;display:none;overflow-y:auto}
+.overlay.show{display:block}
+.overlay-inner{width:100%;min-height:100vh;padding:0}
+
+.ol-h{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;border-bottom:1px solid var(--b);position:sticky;top:0;background:var(--s);z-index:3}
+.ol-h h3{font-size:16px;font-weight:600}
+.ol-h button{background:none;border:none;font-size:22px;color:var(--m2);cursor:pointer;padding:4px;line-height:1}
+.ol-b{padding:16px}
+.ol-b .ol-t{font-size:11px;color:var(--m2);margin-bottom:8px}
+.ol-b .ol-c{font-size:14px;line-height:1.7;color:var(--fg);white-space:pre-wrap}
+
+/* Bottom nav */
+.bn{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:6px 0 16px;background:var(--s);border-top:1px solid var(--b);z-index:100}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--m2);text-decoration:none;transition:color .15s;-webkit-tap-highlight-color:transparent;padding:2px 12px}
+.ni svg{width:24px;height:24px;color:var(--m2);transition:color .15s}
+.ni.on{color:var(--p)}
+.ni.on svg{color:var(--p)}
+.sg-h{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none}
+.sg-h:active{background:#fafafa}
+.sg-ar{flex-shrink:0;transition:transform .2s ease;display:flex;align-items:center;color:var(--m2)}
+.sg-ar svg{width:16px;height:16px;display:block}
+.sg-ar.collapsed{transform:rotate(-90deg)}
+.sg-b{overflow:hidden;transition:max-height .3s ease}
+.sg-b.collapsed{max-height:0 !important;padding-top:0 !important;padding-bottom:0 !important}
+.bn-spacer{height:80px}
+</style></head><body>
+
+<div class="hd">
+  <div class="hd-l">
+    <button class="hd-back" onclick="history.back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+    </button>
+  </div>
+  <h1>今日总结</h1>
+  <div class="hd-r">
+    <button aria-label="搜索">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+    </button>
+  </div>
+</div>
+
+
+
+<div class="sl" id="summaryList">
+  <!-- Course Group 1: 初一数学 -->
+  <div class="sg" data-course="math1">
+    <div class="sg-h" onclick="toggleCourse(this)">
+      <div class="ico i1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <div class="info">
+        <h3>初一数学 · 暑期培优班</h3>
+        <div class="tm">张伟老师 · 今日更新 2 条</div>
+      </div>
+      <span class="badge">2</span>
+      <span class="sg-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+    </div>
+    <div class="sg-b">
+      <div class="msg" onclick="showDetail(this)">
+        <div class="av a1">张</div>
+        <div class="mb">
+          <div class="mn"><span class="nn">张伟老师</span><span class="tt">14:30</span></div>
+          <div class="mp">今天我们学习了有理数的混合运算和绝对值的基本性质。课堂表现整体不错，大部分同学能正确完成基础练习。作业：完成课本P56-58的练习题，明天课堂检查。</div>
+          <span class="tag">📖 课堂总结</span>
+        </div>
+        <div class="unread"></div>
+      </div>
+      <div class="msg" onclick="showDetail(this)">
+        <div class="av a1">张</div>
+        <div class="mb">
+          <div class="mn"><span class="nn">张伟老师</span><span class="tt">09:15</span></div>
+          <div class="mp">今日课堂重点：整式的加减运算。提醒各位家长，本周五将进行第一次单元测试，内容覆盖第一至第三章。请督促孩子复习错题本。</div>
+          <span class="tag">📝 学习提醒</span>
+        </div>
+        <div class="unread"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Group 2: 初二英语 -->
+  <div class="sg" data-course="eng2">
+    <div class="sg-h" onclick="toggleCourse(this)">
+      <div class="ico i2">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+      </div>
+      <div class="info">
+        <h3>初二英语 · 语法突破班</h3>
+        <div class="tm">李芳老师 · 今日更新 1 条</div>
+      </div>
+      <span class="badge">1</span>
+      <span class="sg-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+    </div>
+    <div class="sg-b">
+      <div class="msg" onclick="showDetail(this)">
+        <div class="av a2">李</div>
+        <div class="mb">
+          <div class="mn"><span class="nn">李芳老师</span><span class="tt">16:00</span></div>
+          <div class="mp">今日回顾了一般现在时和现在进行时的区别。重点讲解了第三人称单数的动词变化规则。请家长协助孩子完成练习册第3单元，明天提交。部分同学对疑问句的语序还不太熟练，建议多练习。</div>
+          <span class="tag">📖 课堂总结</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Group 3: 初三物理 -->
+  <div class="sg" data-course="phy3">
+    <div class="sg-h" onclick="toggleCourse(this)">
+      <div class="ico i3">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M2 12h20"/><path d="M20 12a8 8 0 0 1-8 8"/><path d="M12 4a8 8 0 0 1 8 8"/><path d="M4 12a8 8 0 0 0 8 8"/></svg>
+      </div>
+      <div class="info">
+        <h3>初三物理 · 力学专题</h3>
+        <div class="tm">王强老师 · 今日更新 1 条</div>
+      </div>
+      <span class="badge">1</span>
+      <span class="sg-ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
+    </div>
+    <div class="sg-b">
+      <div class="msg" onclick="showDetail(this)">
+        <div class="av a5">王</div>
+        <div class="mb">
+          <div class="mn"><span class="nn">王强老师</span><span class="tt">11:20</span></div>
+          <div class="mp">今天做了浮力的专题练习，重点复习了阿基米德原理的应用。大部分同学对公式运用已经比较熟练，但在综合题的受力分析上还需要加强。下周实验课将进行密度测量实验。</div>
+          <span class="tag">📖 课堂总结</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Course Group 4: 高一化学 -->
+  <div class="sg" data-course="chem1">
+    <div class="sg-h" onclick="toggleCourse(this)">
+      <div class="ico i4">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="4" rx="8" ry="2"/><path d="M4 4v4c0 1.1 2 2 8 2s8-.9 8-2V4"/><path d="M4 8v4c0 1.1 2 2 8 2s8-.9 8-2V8"/><path d="M4 12v4c0 1.1 2 2 8 2s8-.9 8-2v-4"/><path d="M4 16v4c0 1.1 2 2 8 2s8-.9 8-2v-4"/></svg>
+      </div>
+      <div class="info">
+        <h3>高一化学 · 预科入门</h3>
+        <div class="tm">陈敏老师 · 昨日更新</div>
+      </div>
+    </div>
+    <div class="sg-b">
+      <div class="msg" onclick="showDetail(this)">
+        <div class="av a4">陈</div>
+        <div class="mb">
+          <div class="mn"><span class="nn">陈敏老师</span><span class="tt">昨天 17:40</span></div>
+          <div class="mp">昨天学习了化学方程式的配平，通过课堂练习大家基本掌握了最小公倍数法和观察法。作业：完成练习册P23-25，明天课前交。下次课将进入摩尔质量的学习，请提前预习。</div>
+          <span class="tag">📖 课堂总结</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="display:none" class="empty" id="emptyState">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+  <p>暂无今日总结<br/>老师会在课后推送学习总结</p>
+</div>
+
+<!-- Detail Overlay -->
+<div class="overlay" id="detailOverlay" onclick="closeDetail(event)">
+  <div class="overlay-inner" onclick="event.stopPropagation()">
+    <div class="ol-h">
+      <h3 id="detailTitle">课堂总结</h3>
+      <button onclick="closeDetail(event)">✕</button>
+    </div>
+    <div class="ol-b">
+      <div class="ol-t" id="detailTime">今天 14:30 · 张伟老师</div>
+      <div class="ol-c" id="detailContent">内容加载中...</div>
+    </div>
+  </div>
+</div>
+
+<div class="bn-spacer"></div>
+<nav class="bn">
+  <a class="ni" href="01-home.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    <span>首页</span>
+  </a>
+  <a class="ni" href="02-course-list.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+    <span>课程</span>
+  </a>
+  <a class="ni" href="03-study.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+    <span>学习</span>
+  </a>
+  <a class="ni" href="04-profile.html">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+    <span>我的</span>
+  </a>
+</nav>
+
+<script>
+function showDetail(el) {
+  var name = el.querySelector(".nn").textContent;
+  var time = el.querySelector(".tt").textContent;
+  var content = el.querySelector(".mp").textContent;
+  var tagEl = el.querySelector(".tag");
+  var tag = tagEl ? tagEl.textContent.trim() : "消息详情";
+  document.getElementById("detailTitle").textContent = tag;
+  document.getElementById("detailTime").textContent = time + " · " + name;
+  document.getElementById("detailContent").textContent = content;
+  document.getElementById("detailOverlay").classList.add("show");
+}
+function toggleCourse(el){
+  var body=el.nextElementSibling;
+  var arrow=el.querySelector(".sg-ar");
+  body.classList.toggle("collapsed");
+  if(arrow)arrow.classList.toggle("collapsed");
+}
+function closeDetail(e) {
+  if (e) e.preventDefault();
+  document.getElementById("detailOverlay").classList.remove("show");
+}
+</script>
+</body></html>

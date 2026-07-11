@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>课程管理 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.hd{display:flex;align-items:center;padding:10px 16px;background:var(--s)}
+.hd-back{display:flex;align-items:center;gap:4px;background:none;border:none;padding:4px 0;cursor:pointer;color:var(--fg);font-size:15px}
+.hd-back svg{width:22px;height:22px}
+.hd h1{flex:1;text-align:center;font-size:18px;font-weight:700;letter-spacing:-0.3px;margin-right:28px}
+.hd-r{display:flex;align-items:center;gap:10px}
+.hd-r button{background:none;border:none;padding:4px;cursor:pointer;color:var(--fg)}
+.hd-r button svg{width:22px;height:22px;color:var(--m2)}
+.srch{margin:10px 16px;position:relative}
+.srch svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--m2);pointer-events:none}
+.srch input{width:100%;padding:9px 12px 9px 36px;border:1px solid var(--b);border-radius:20px;background:var(--s);font-size:13px;outline:none}
+.srch input:focus{border-color:var(--p);box-shadow:0 0 0 2px var(--pl)}
+.st{display:flex;margin:0 16px 8px;background:var(--s);border-radius:var(--r);border:1px solid var(--b);overflow:hidden}
+.st-i{flex:1;text-align:center;padding:9px 0;font-size:12px;font-weight:500;color:var(--m2);cursor:pointer;transition:all .15s}
+.st-i.on{background:var(--p);color:#fff;font-weight:600}
+.cl{padding:0 16px 16px;display:flex;flex-direction:column;gap:10px}
+.ci{background:var(--s);border-radius:var(--rl);border:1px solid var(--b);overflow:hidden}
+.ci-h{display:flex;align-items:center;gap:10px;padding:14px}
+.ci-h .co{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.ci-h .co.c1{background:var(--pl)}.ci-h .co.c2{background:#e3f2fd}.ci-h .co.c3{background:#fff3e0}.ci-h .co.c4{background:#e8f5e9}
+.ci-h .cb{flex:1;min-width:0}
+.ci-h .cb h4{font-size:13px;font-weight:600}
+.ci-h .cb .ct{font-size:11px;color:var(--m2);margin-top:1px}
+.ci-h .cb .ct .tg{display:inline-block;padding:1px 5px;background:var(--pl);color:var(--p);border-radius:3px;font-size:10px;margin-right:2px}
+.ci-b{padding:0 14px 14px;display:flex;gap:8px;flex-wrap:wrap}
+.ci-b .info{flex:1;font-size:11px;color:var(--m2);padding:6px 0;display:flex;gap:10px}
+.ci-b .info span{display:flex;align-items:center;gap:2px}
+.ci-b .info svg{width:12px;height:12px}
+.ci-b .act{display:flex;gap:6px}
+.ci-b .act button{padding:5px 10px;border-radius:5px;font-size:11px;font-weight:500;border:none;cursor:pointer;font-family:var(--f)}
+.ci-b .act .edit{background:var(--pl);color:var(--p)}
+.ci-b .act .del{background:#fce4ec;color:#e91e63}
+.ci-b .act .view{background:var(--bg);color:var(--m2)}
+.status{padding:3px 8px;border-radius:4px;font-size:10px;font-weight:500;margin-left:auto;flex-shrink:0}
+.status.s1{background:#e8f5e9;color:#4caf50}
+.status.s2{background:#fff3e0;color:#ff9800}
+.status.s3{background:var(--bg);color:var(--m2)}
+.empty{padding:40px;text-align:center;font-size:13px;color:var(--m2)}
+</style>
+</head>
+<body>
+
+<div class="hd">
+  <button class="hd-back" onclick="history.back()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <h1>课程管理</h1>
+  <div class="hd-r">
+    <button onclick="location.href='admin-publish-course.html'" aria-label="新增课程">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+    </button>
+  </div>
+</div>
+
+<div class="srch">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+  <input placeholder="搜索课程名称、教师…" oninput="filterCourses(this)"/>
+</div>
+
+<div class="st">
+  <div class="st-i on" onclick="filterTab(this,0)">全部</div>
+  <div class="st-i" onclick="filterTab(this,1)">已上架</div>
+  <div class="st-i" onclick="filterTab(this,2)">审核中</div>
+  <div class="st-i" onclick="filterTab(this,3)">已结束</div>
+</div>
+
+<div class="cl" id="courseList">
+
+<div class="ci" data-status="1">
+<div class="ci-h">
+<div class="co c1">📐</div>
+<div class="cb"><h4>初一数学 · 暑期培优班</h4><div class="ct">张伟 · 16课时</div></div>
+<span class="status s1">已上架</span>
+</div>
+<div class="ci-b">
+<div class="info"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>38人</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>¥1,280</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>8/16</span></div>
+<div class="act"><button class="view">查看</button><button class="edit">编辑</button><button class="del">下架</button></div>
+</div></div>
+
+<div class="ci" data-status="1">
+<div class="ci-h">
+<div class="co c2">📖</div>
+<div class="cb"><h4>初二英语 · 语法突破班</h4><div class="ct">李芳 · 12课时</div></div>
+<span class="status s1">已上架</span>
+</div>
+<div class="ci-b">
+<div class="info"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>42人</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>¥960</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>5/12</span></div>
+<div class="act"><button class="view">查看</button><button class="edit">编辑</button><button class="del">下架</button></div>
+</div></div>
+
+<div class="ci" data-status="1">
+<div class="ci-h">
+<div class="co c3">⚡</div>
+<div class="cb"><h4>初三物理 · 力学专题</h4><div class="ct">王强 · 14课时</div></div>
+<span class="status s1">已上架</span>
+</div>
+<div class="ci-b">
+<div class="info"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>56人</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>¥1,120</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>10/14</span></div>
+<div class="act"><button class="view">查看</button><button class="edit">编辑</button><button class="del">下架</button></div>
+</div></div>
+
+<div class="ci" data-status="2">
+<div class="ci-h">
+<div class="co c4">🧪</div>
+<div class="cb"><h4>高一化学 · 预科入门</h4><div class="ct">陈敏 · 10课时</div></div>
+<span class="status s2">审核中</span>
+</div>
+<div class="ci-b">
+<div class="info"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>0人</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>¥800</span><span>-</span></div>
+<div class="act"><button class="view">查看</button><button class="edit">编辑</button><button class="del" style="background:var(--pl);color:var(--p)">上架</button></div>
+</div></div>
+
+<div class="ci" data-status="3">
+<div class="ci-h">
+<div class="co c1">📘</div>
+<div class="cb"><h4>初一语文 · 阅读写作班</h4><div class="ct">赵丽 · 12课时</div></div>
+<span class="status s3">已结束</span>
+</div>
+<div class="ci-b">
+<div class="info"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>32人</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>¥1,080</span><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>12/12</span></div>
+<div class="act"><button class="view">查看</button><button class="edit">编辑</button><button class="del" style="background:var(--bg);color:var(--m2);cursor:default">已结束</button></div>
+</div></div>
+
+</div>
+
+<script>
+function filterCourses(input){
+  var q=input.value.trim().toLowerCase();
+  document.querySelectorAll(".ci").forEach(function(el){
+    el.style.display=(!q||el.textContent.toLowerCase().indexOf(q)>=0)?"":"none";
+  });
+}
+function filterTab(el,idx){
+  document.querySelectorAll(".st-i").forEach(function(t){t.classList.remove("on");});
+  el.classList.add("on");
+  document.querySelectorAll(".ci").forEach(function(c){
+    var s=c.getAttribute("data-status");
+    if(idx===0) c.style.display="";
+    else c.style.display=(parseInt(s)===idx)?"":"none";
+  });
+}
+</script>
+</body></html>

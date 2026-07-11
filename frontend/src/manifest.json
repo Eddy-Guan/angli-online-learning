@@ -1,0 +1,21 @@
+{
+  "name": "昂立教育",
+  "appid": "__UNI__ANGLI_ONLINE",
+  "description": "昂立教育在线学习平台",
+  "versionName": "1.0.0",
+  "versionCode": "100",
+  "transformPx": false,
+  "h5": {
+    "title": "昂立教育",
+    "router": {
+      "mode": "hash"
+    }
+  },
+  "mp-weixin": {
+    "appid": "",
+    "setting": {
+      "urlCheck": false
+    },
+    "usingComponents": true
+  }
+}

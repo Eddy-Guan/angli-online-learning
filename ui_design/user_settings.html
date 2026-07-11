@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>设置 · 昂立教育</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    :root {
+      --p: #F05A22;
+      --pl: #fde8e1;
+      --p2: #ff7a45;
+      --bg: #F5F5F7;
+      --s: #FFF;
+      --fg: #1d1d1f;
+      --m2: #6e6e73;
+      --m: #999;
+      --b: #e8e8ed;
+      --r: 10px;
+      --rl: 12px;
+      --f: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", sans-serif
+    }
+
+    body {
+      font-family: var(--f);
+      background: var(--bg);
+      color: var(--fg);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased
+    }
+
+    .hd {
+      display: flex;
+      align-items: center;
+      padding: 10px 16px;
+      background: var(--s)
+    }
+
+    .hd-back {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: none;
+      border: none;
+      padding: 4px 0;
+      cursor: pointer;
+      color: var(--fg);
+      font-size: 15px;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    .hd-back svg {
+      width: 22px;
+      height: 22px;
+      color: var(--fg)
+    }
+
+    .hd h1 {
+      flex: 1;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+      margin-right: 28px
+    }
+
+    .profile {
+      background: var(--s);
+      padding: 20px 16px;
+      display: flex;
+      gap: 14px;
+      align-items: center;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .15s
+    }
+
+    .profile:active {
+      background: #fafafa
+    }
+
+    .av {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--pl);
+      color: var(--p);
+      flex-shrink: 0
+    }
+
+    .av svg {
+      width: 26px;
+      height: 26px
+    }
+
+    .pi h2 {
+      font-size: 17px;
+      font-weight: 700
+    }
+
+    .pi p {
+      font-size: 12px;
+      color: var(--m2);
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      gap: 4px
+    }
+
+    .pi .ar {
+      color: var(--m2);
+      margin-left: auto
+    }
+
+    .mg {
+      background: var(--s);
+      margin-top: 12px;
+      border-top: 1px solid var(--b);
+      border-bottom: 1px solid var(--b)
+    }
+
+    .mg-h {
+      padding: 12px 16px 4px;
+      font-size: 11px;
+      color: var(--m2);
+      font-weight: 500
+    }
+
+    .mi {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--b);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .15s
+    }
+
+    .mi:last-child {
+      border-bottom: none
+    }
+
+    .mi:active {
+      background: #fafafa
+    }
+
+    .mi .ic {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0
+    }
+
+    .mi .ic svg {
+      width: 18px;
+      height: 18px
+    }
+
+    .mi .ic.i-o {
+      background: #fde8e1;
+      color: var(--p)
+    }
+
+    .mi .ic.i-b {
+      background: #e3f2fd;
+      color: #2196f3
+    }
+
+    .mi .ic.i-k {
+      background: #fff3e0;
+      color: #ff9800
+    }
+
+    .mi .ic.i-n {
+      background: #e8f5e9;
+      color: #4caf50
+    }
+
+    .mi .ic.i-c {
+      background: #f3e5f5;
+      color: #9c27b0
+    }
+
+    .mi .ic.i-d {
+      background: #fce4ec;
+      color: #e91e63
+    }
+
+    .mi .lb {
+      flex: 1;
+      font-size: 14px;
+      font-weight: 500
+    }
+
+    .mi .hint {
+      font-size: 11px;
+      color: var(--m2);
+      margin-top: 1px
+    }
+
+    .mi .bd {
+      padding: 2px 7px;
+      background: var(--p);
+      color: #fff;
+      border-radius: 10px;
+      font-size: 10px;
+      font-weight: 600;
+      min-width: 18px;
+      text-align: center
+    }
+
+    .mi .ar {
+      color: var(--m2);
+      flex-shrink: 0;
+      display: flex
+    }
+
+    .mi .ar svg {
+      width: 16px;
+      height: 16px
+    }
+
+    .toggle {
+      width: 44px;
+      height: 26px;
+      border-radius: 13px;
+      background: var(--b);
+      position: relative;
+      cursor: pointer;
+      transition: background .2s;
+      flex-shrink: 0
+    }
+
+    .toggle.on {
+      background: var(--p)
+    }
+
+    .toggle::after {
+      content: "";
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #fff;
+      transition: transform .2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, .15)
+    }
+
+    .toggle.on::after {
+      transform: translateX(18px)
+    }
+
+    .logout {
+      margin: 20px 16px;
+      padding: 12px;
+      text-align: center;
+      background: var(--s);
+      border: 1px solid var(--b);
+      border-radius: 12px;
+      color: #dc2626;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    .logout:active {
+      background: #fef2f2
+    }
+
+    .version {
+      text-align: center;
+      padding: 12px 16px 20px;
+      font-size: 11px;
+      color: var(--m2)
+    }
+
+    .bn {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-around;
+      padding: 6px 0 16px;
+      background: var(--s);
+      border-top: 1px solid var(--b);
+      z-index: 100
+    }
+
+    .ni {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      font-size: 10px;
+      color: var(--m2);
+      text-decoration: none;
+      transition: color .15s;
+      -webkit-tap-highlight-color: transparent;
+      padding: 2px 12px
+    }
+
+    .ni svg {
+      width: 24px;
+      height: 24px;
+      color: var(--m2);
+      transition: color .15s
+    }
+
+    .ni.on {
+      color: var(--p)
+    }
+
+    .ni.on svg {
+      color: var(--p)
+    }
+
+    .bn-spacer {
+      height: 80px
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="hd">
+    <button class="hd-back" onclick="history.back()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="m15 18-6-6 6-6" />
+      </svg>
+    </button>
+    <h1>设置</h1>
+  </div>
+
+  <div class="profile" onclick="location.href='#'">
+    <div class="av"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg></div>
+    <div class="pi">
+      <h2>李明</h2>
+      <p>家长 · 已绑定2个孩子</p>
+    </div>
+    <span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+        stroke-linejoin="round" width="18" height="18">
+        <path d="m9 18 6-6-6-6" />
+      </svg></span>
+  </div>
+
+  <div class="mg">
+    <div class="mg-h">账号与安全</div>
+    <div class="mi" onclick="toast('个人信息编辑功能')">
+      <div class="ic i-o"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg></div>
+      <span class="lb">修改用户信息</span>
+      <span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6" />
+        </svg></span>
+    </div>
+    <div class="mi" onclick="toast('绑定孩子功能')">
+      <div class="ic i-k"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg></div>
+      <div style="flex:1"><span class="lb">绑定孩子信息</span>
+        <div class="hint">已绑定2个孩子</div>
+      </div>
+      <span class="bd">2</span>
+      <span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6" />
+        </svg></span>
+    </div>
+    <div class="mi" onclick="toast('修改密码功能')">
+      <div class="ic i-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg></div>
+      <span class="lb">修改密码</span>
+      <span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6" />
+        </svg></span>
+    </div>
+  </div>
+
+  <div class="mg">
+    <div class="mg-h">消息与存储</div>
+    <div class="mi">
+      <div class="ic i-n"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" />
+          <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" />
+        </svg></div>
+      <span class="lb">消息通知</span>
+      <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+    </div>
+
+  </div>
+
+  <div class="mg">
+    <div class="mg-h">其他</div>
+    <div class="mi" onclick="toast('关于我们')">
+      <div class="ic i-d"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="16" x2="12" y2="12" />
+          <line x1="12" y1="8" x2="12.01" y2="8" />
+        </svg></div>
+      <span class="lb">关于我们</span>
+      <span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6" />
+        </svg></span>
+    </div>
+    <div class="mi" onclick="toast('联系客服')">
+      <div class="ic i-b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+        </svg></div>
+      <span class="lb">联系客服</span>
+      <span class="hint" style="font-size:13px;color:var(--p)">400-800-8888</span>
+      <span class="ar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="m9 18 6-6-6-6" />
+        </svg></span>
+    </div>
+  </div>
+
+  <div class="logout" onclick="toast('已退出登录')">退出登录</div>
+  <div class="version">昂立教育 v2.3.1</div>
+  <div class="bn-spacer"></div>
+
+  <nav class="bn">
+    <a class="ni" href="01-home.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+        <polyline points="9 22 9 12 15 12 15 22" />
+      </svg><span>首页</span></a>
+    <a class="ni" href="02-course-list.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+        <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+      </svg><span>课程</span></a>
+    <a class="ni" href="03-study.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
+      </svg><span>学习</span></a>
+    <a class="ni on" href="04-profile.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+        stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+        <circle cx="12" cy="7" r="4" />
+      </svg><span>我的</span></a>
+  </nav>
+
+  <style>
+    .toast {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, .78);
+      color: #fff;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-size: 13px;
+      z-index: 999;
+      display: none;
+      text-align: center;
+      pointer-events: none
+    }
+  </style>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    function toast(msg) {
+      var t = document.getElementById("toast");
+      t.textContent = msg; t.style.display = "block";
+      setTimeout(function () { t.style.display = "none" }, 1600);
+    }
+  </script>
+</body>
+
+</html>

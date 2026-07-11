@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>绑定孩子 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--p2:#ff7a45;--bg:#F5F5F7;--s:#FFF;--fg:#1d1d1f;--m2:#6e6e73;--m:#999;--b:#e8e8ed;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;min-height:100vh}
+.hd{display:flex;align-items:center;padding:10px 16px;background:var(--s)}
+.hd-back{display:flex;align-items:center;gap:4px;background:none;border:none;padding:4px 0;cursor:pointer;color:var(--fg);font-size:15px;-webkit-tap-highlight-color:transparent}
+.hd-back svg{width:22px;height:22px}
+.hd h1{flex:1;text-align:center;font-size:18px;font-weight:700;letter-spacing:-0.3px;margin-right:28px}
+
+/* Avatar section */
+.av-sec{padding:24px 16px 16px;text-align:center;background:var(--s);margin-bottom:12px}
+.av-sec .av-wrap{position:relative;display:inline-block}
+.av-sec .av{width:80px;height:80px;border-radius:50%;display:flex;align-items:center;justify-content:center;overflow:hidden;margin:0 auto;cursor:pointer}
+.av-sec .av img{width:100%;height:100%;object-fit:cover}
+.av-sec .av .ph{width:100%;height:100%;background:var(--pl);display:flex;align-items:center;justify-content:center}
+.av-sec .av .ph svg{width:36px;height:36px;color:var(--p)}
+.av-sec .av-cam{position:absolute;bottom:0;right:-2px;width:28px;height:28px;background:var(--p);border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid var(--s)}
+.av-sec .av-cam svg{width:14px;height:14px;color:#fff}
+.av-sec .av-tip{font-size:12px;color:var(--m2);margin-top:8px}
+.av-sec .av-tip span{color:var(--p)}
+
+/* Default avatars */
+.def-av{display:flex;gap:12px;justify-content:center;padding:12px 16px 8px;background:var(--s)}
+.def-av .da{width:48px;height:48px;border-radius:50%;cursor:pointer;border:2.5px solid transparent;transition:all .15s;display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;flex-shrink:0}
+.def-av .da.on{border-color:var(--p);box-shadow:0 0 0 3px var(--pl);transform:scale(1.08)}
+.def-av .da:active{transform:scale(.92)}
+.def-av .da.d1{background:#fde8e1}
+.def-av .da.d2{background:#e3f2fd}
+.def-av .da.d3{background:#fff3e0}
+.def-av .da.d4{background:#e8f5e9}
+.def-av .da.d5{background:#f3e5f5}
+.def-av .da.d6{background:#fce4ec}
+.def-hint{text-align:center;font-size:11px;color:var(--m2);padding:0 16px 10px;background:var(--s)}
+
+/* Steps */
+.steps{display:flex;align-items:center;justify-content:center;gap:0;padding:12px 16px;background:var(--s);margin-bottom:12px}
+.step{display:flex;align-items:center;gap:6px}
+.step .n{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0}
+.step .n.done{background:var(--p);color:#fff}
+.step .n.cur{background:var(--pl);color:var(--p);border:1.5px solid var(--p)}
+.step .n.pend{background:var(--bg);color:var(--m2)}
+.step .lb{font-size:12px;color:var(--m2);font-weight:500}
+.step .lb.cur{color:var(--p);font-weight:600}
+.step-line{width:24px;height:1px;background:var(--b);margin:0 4px}
+
+/* Form */
+.fm{padding:16px}
+.sg{background:var(--s);border-radius:var(--rl);border:1px solid var(--b);overflow:hidden;margin-bottom:12px}
+.sg-h{padding:14px 16px 10px;font-size:13px;font-weight:600;color:var(--fg);border-bottom:1px solid var(--b)}
+.sg-b{padding:10px 16px 14px}
+.fg{display:flex;flex-direction:column;gap:5px;margin-bottom:12px}
+.fg:last-child{margin-bottom:0}
+.fg label{font-size:12px;font-weight:600;color:var(--fg)}
+.fg label .rq{color:#dc2626;margin-left:2px}
+.fg .inp,.fg select{width:100%;padding:11px 14px;border:1px solid var(--b);border-radius:var(--r);background:var(--s);font-size:14px;color:var(--fg);font-family:var(--f);outline:none;transition:border-color .15s}
+.fg .inp:focus,.fg select:focus{border-color:var(--p);box-shadow:0 0 0 2px var(--pl)}
+.fg .inp::placeholder{color:var(--m2)}
+.fg .hint{font-size:11px;color:var(--m2);margin-top:1px}
+
+/* Gender selector */
+.gd{display:flex;gap:10px}
+.gd-i{flex:1;padding:12px;border:2px solid var(--b);border-radius:var(--r);text-align:center;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.gd-i:active{transform:scale(.97)}
+.gd-i.on{border-color:var(--p);background:var(--pl)}
+.gd-i .ic{font-size:28px}
+.gd-i .lb{font-size:13px;font-weight:600;color:var(--fg)}
+
+/* Grade/class selector */
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+/* Submit */
+.btn-p{width:100%;padding:14px;background:linear-gradient(135deg,var(--p),var(--p2));color:#fff;border:none;border-radius:var(--rl);font-size:16px;font-weight:600;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:opacity .15s}
+.btn-p:active{opacity:.85}
+
+/* Child list */
+.cl{display:flex;flex-direction:column;gap:10px}
+.ci{display:flex;align-items:center;gap:12px;padding:12px;background:var(--s);border-radius:var(--r);border:1px solid var(--b)}
+.ci .ca{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
+.ci .ca.g1{background:#fde8e1}
+.ci .ca.g2{background:#e3f2fd}
+.ci .ca.g3{background:#fff3e0}
+.ci .cb{flex:1}
+.ci .cb h4{font-size:14px;font-weight:600}
+.ci .cb p{font-size:11px;color:var(--m2);margin-top:1px}
+.ci .cd{color:var(--m2);display:flex;align-items:center}
+.ci .cd svg{width:16px;height:16px}
+
+/* Toast */
+.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);color:#fff;padding:10px 22px;border-radius:8px;font-size:13px;z-index:999;display:none;text-align:center;pointer-events:none}
+</style></head><body>
+
+<div class="hd">
+  <button class="hd-back" onclick="history.back()">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+  </button>
+  <h1>绑定孩子</h1>
+</div>
+
+<!-- Steps indicator -->
+<div class="steps">
+  <div class="step"><div class="n cur">1</div><span class="lb cur">填写资料</span></div>
+  <div class="step-line"></div>
+  <div class="step"><div class="n pend">2</div><span class="lb">完成绑定</span></div>
+</div>
+
+<!-- Avatar section -->
+<div class="av-sec">
+  <div class="av-wrap">
+    <div class="av" id="avatarPreview" onclick="document.getElementById('fileInput').click()">
+      <div class="ph" id="avatarPlaceholder">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </div>
+    </div>
+    <div class="av-cam">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+    </div>
+    <input type="file" id="fileInput" accept="image/*" style="display:none" onchange="handleUpload(this)"/>
+  </div>
+  <div class="av-tip">点击头像 <span>拍照</span> 或从 <span>相册</span> 选择</div>
+</div>
+
+<div class="def-hint">或选择一个默认头像</div>
+<div class="def-av" id="defaultAvatars">
+  <div class="da d1 on" onclick="selectDefault(this)">👦</div>
+  <div class="da d2" onclick="selectDefault(this)">👧</div>
+  <div class="da d3" onclick="selectDefault(this)">🐯</div>
+  <div class="da d4" onclick="selectDefault(this)">🐼</div>
+  <div class="da d5" onclick="selectDefault(this)">🐰</div>
+  <div class="da d6" onclick="selectDefault(this)">🐱</div>
+</div>
+
+<!-- Info form -->
+<div class="fm" id="childForm">
+  <div class="sg">
+    <div class="sg-h">基本信息</div>
+    <div class="sg-b">
+      <div class="fg">
+        <label>孩子姓名 <span class="rq">*</span></label>
+        <input class="inp" id="childName" placeholder="请输入孩子的真实姓名"/>
+      </div>
+      <div class="fg">
+        <label>性别 <span class="rq">*</span></label>
+        <div class="gd">
+          <div class="gd-i on" data-gender="boy" onclick="selectGender(this)">
+            <span class="ic">👦</span>
+            <span class="lb">男孩</span>
+          </div>
+          <div class="gd-i" data-gender="girl" onclick="selectGender(this)">
+            <span class="ic">👧</span>
+            <span class="lb">女孩</span>
+          </div>
+        </div>
+      </div>
+      <div class="fg">
+        <label>出生日期 <span class="rq">*</span></label>
+        <input class="inp" type="date" id="childBirthday" value="2014-09-01"/>
+      </div>
+    </div>
+  </div>
+
+  <div class="sg">
+    <div class="sg-h">学校信息（选填）</div>
+    <div class="sg-b">
+      <div class="row2">
+        <div class="fg">
+          <label>年级</label>
+          <select id="childGrade">
+            <option value="">请选择</option>
+            <option>一年级</option><option>二年级</option><option>三年级</option>
+            <option>四年级</option><option>五年级</option><option>六年级</option>
+            <option>初一</option><option>初二</option><option>初三</option>
+            <option>高一</option><option>高二</option><option>高三</option>
+          </select>
+        </div>
+        <div class="fg">
+          <label>班级</label>
+          <select id="childClass">
+            <option value="">请选择</option>
+            <option>1班</option><option>2班</option><option>3班</option>
+            <option>4班</option><option>5班</option><option>6班</option>
+            <option>7班</option><option>8班</option><option>9班</option>
+            <option>10班</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg">
+        <label>学校</label>
+        <input class="inp" id="childSchool" placeholder="请输入学校名称"/>
+      </div>
+    </div>
+  </div>
+
+  <button class="btn-p" onclick="doBind()">确认绑定</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+function toast(msg){
+  var t=document.getElementById("toast");
+  t.textContent=msg;t.style.display="block";
+  setTimeout(function(){t.style.display="none"},1600);
+}
+
+// Avatar upload
+function handleUpload(input){
+  var file=input.files[0];
+  if(!file)return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var preview=document.getElementById("avatarPreview");
+    var ph=document.getElementById("avatarPlaceholder");
+    preview.innerHTML='<img src="'+e.target.result+'" alt="头像"/>';
+    document.querySelectorAll(".da").forEach(function(d){d.classList.remove("on")});
+  };
+  reader.readAsDataURL(file);
+}
+
+// Default avatar select
+function selectDefault(el){
+  document.querySelectorAll(".da").forEach(function(d){d.classList.remove("on")});
+  el.classList.add("on");
+}
+
+// Gender select
+function selectGender(el){
+  document.querySelectorAll(".gd-i").forEach(function(d){d.classList.remove("on")});
+  el.classList.add("on");
+}
+
+function doBind(){
+  var name=document.getElementById("childName").value.trim();
+  if(!name){toast("请输入孩子姓名");return;}
+  toast("绑定成功！🎉");
+  setTimeout(function(){history.back()},1500);
+}
+</script>
+</body></html>

@@ -1,0 +1,107 @@
+{
+  "pages": [
+    {
+      "path": "pages/user_login/index",
+      "style": {
+        "navigationBarTitleText": "登录",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user_home/index",
+      "style": {
+        "navigationBarTitleText": "首页",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user_course/index",
+      "style": {
+        "navigationBarTitleText": "选课中心",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user_course_detail/index",
+      "style": {
+        "navigationBarTitleText": "课程详情",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user_learn/index",
+      "style": {
+        "navigationBarTitleText": "学习中心",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user_profile/index",
+      "style": {
+        "navigationBarTitleText": "个人中心",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user_settings/index",
+      "style": {
+        "navigationBarTitleText": "设置",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/user_bind-child/index",
+      "style": {
+        "navigationBarTitleText": "绑定孩子",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/teacher_dashboard/index",
+      "style": {
+        "navigationBarTitleText": "教师端",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_dashboard/index",
+      "style": {
+        "navigationBarTitleText": "管理后台",
+        "navigationStyle": "custom"
+      }
+    }
+  ],
+  "globalStyle": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "昂立教育",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#F5F5F7",
+    "app-plus": {
+      "background": "#F5F5F7"
+    }
+  },
+  "tabBar": {
+    "color": "#6e6e73",
+    "selectedColor": "#F05A22",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/user_home/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/user_course/index",
+        "text": "课程"
+      },
+      {
+        "pagePath": "pages/user_learn/index",
+        "text": "学习"
+      },
+      {
+        "pagePath": "pages/user_profile/index",
+        "text": "我的"
+      }
+    ]
+  }
+}
