@@ -17,6 +17,7 @@ export interface RegisterData {
   password: string
   realName: string
   role: string
+  code: string
 }
 
 export function login(data: LoginData): Promise<LoginResponse> {
@@ -25,4 +26,8 @@ export function login(data: LoginData): Promise<LoginResponse> {
 
 export function register(data: RegisterData): Promise<void> {
   return post('/auth/register', data)
+}
+
+export function sendCode(phone: string): Promise<void> {
+  return post('/auth/send-code', { phone })
 }

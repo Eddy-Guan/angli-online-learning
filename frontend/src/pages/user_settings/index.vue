@@ -48,6 +48,10 @@
         </view>
       </view>
       
+      <view class="logout-section">
+        <view class="logout-btn" @click="doLogout">退出登录</view>
+      </view>
+      
       <view class="version-info">
         <text class="version-text">版本号：v1.0.0</text>
       </view>
@@ -58,6 +62,10 @@
 </template>
 
 <script setup lang="ts">
+import { useUserStore } from '@/stores/user'
+
+const userStore = useUserStore()
+
 function goBack() {
   uni.navigateBack()
 }
@@ -84,6 +92,18 @@ function goToTerms() {
 
 function goToAbout() {
   uni.showToast({ title: '功能开发中', icon: 'none' })
+}
+
+function doLogout() {
+  uni.showModal({
+    title: '确认退出',
+    content: '确定要退出登录吗？',
+    success: (res) => {
+      if (res.confirm) {
+        userStore.logout()
+      }
+    }
+  })
 }
 </script>
 
@@ -172,6 +192,22 @@ function goToAbout() {
 .menu-arrow {
   font-size: 28rpx;
   color: $text-muted;
+}
+
+.logout-section {
+  margin-bottom: 24rpx;
+}
+
+.logout-btn {
+  width: 100%;
+  padding: 28rpx;
+  background: #fff;
+  color: #dc2626;
+  border: 2rpx solid #dc2626;
+  border-radius: 16rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
 }
 
 .version-info {

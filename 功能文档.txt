@@ -94,16 +94,31 @@ Tab 列表规划（原逻辑重构）：
 
 教师评价：家长评分模块的分数计算公式为 总评分星数 ÷ 参与评分的课程总数。
 
+
 个人设置：
 
 点击齿轮跳转至 teacher-settings.html。
 
 个人标签展示：最多展示 3 个标签，每个标签限制最多 4 个中文字符。
 
+页面设计:
+主页ui:参考D:\AI_project\angli_online_xiaochengxu\ui_design\teacher_home.html
+课程申请ui:"D:\AI_project\angli_online_xiaochengxu\ui_design\teacher_apply.html"
+"课程"页面ui:D:\AI_project\angli_online_xiaochengxu\ui_design\teacher_courses.html
+"推送"ui:D:\AI_project\angli_online_xiaochengxu\ui_design\teacher_push.html
+
 功能屏蔽：暂时屏蔽“作业提交率”功能。
 
 💻 模块 3：Admin端 (管理后台)
 1. 首页 Dashboard
+
+ui界面:
+主页ui:参考D:\AI_project\angli_online_xiaochengxu\ui_design\admin_review.html
+个人中心ui:D:\AI_project\angli_online_xiaochengxu\ui_design\admin_profile.html
+"首页"页面ui:D:\AI_project\angli_online_xiaochengxu\ui_design\admin_home.html
+"内容"ui:D:\AI_project\angli_online_xiaochengxu\ui_design\admin_content.html
+
+
 数据统计项：
 
 总注册用户：平台注册用户总数。

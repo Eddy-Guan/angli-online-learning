@@ -7,5 +7,5 @@ export interface LearningStats {
 }
 
 export function getLearningStats(userId: number): Promise<LearningStats> {
-  return get('/parent/stats/learning', { userId })
+  return get(`/parent/stats/learning?userId=${userId}`)
 }

@@ -8,38 +8,24 @@
       <view class="search-bar">
         <view class="search-input-group">
           <text class="search-icon">🔍</text>
-          <input 
-            v-model="searchKeyword" 
-            placeholder="搜索课程、老师" 
-            class="search-input"
-            confirm-type="search"
-            @confirm="handleSearch"
-          />
+          <input v-model="searchKeyword" placeholder="搜索课程、老师" class="search-input" confirm-type="search"
+            @confirm="handleSearch" />
           <text class="search-clear" v-if="searchKeyword" @click="searchKeyword = ''">✕</text>
         </view>
       </view>
     </view>
-    
+
     <scroll-view class="content" scroll-y>
       <view class="filter-tabs">
-        <view 
-          v-for="tab in tabs" 
-          :key="tab.key"
-          :class="['tab-item', { active: activeTab === tab.key }]"
-          @click="activeTab = tab.key"
-        >
+        <view v-for="tab in tabs" :key="tab.key" :class="['tab-item', { active: activeTab === tab.key }]"
+          @click="activeTab = tab.key">
           {{ tab.label }}
         </view>
       </view>
-      
+
       <view class="course-grid">
-        <view 
-          v-for="course in courses" 
-          :key="course.id" 
-          class="course-card"
-          @click="goToCourseDetail(course.id)"
-        >
-          <image class="course-cover" :src="course.coverImage" mode="aspectFill" />
+        <view v-for="course in courses" :key="course.id" class="course-card" @click="goToCourseDetail(course.id)">
+          <image class="course-cover" :src="course.coverImage || '/api/images/default-course.svg'" mode="aspectFill" />
           <view class="course-tag" v-if="course.category">{{ course.category }}</view>
           <view class="course-favorite" @click.stop="toggleFavorite(course)">
             <text>{{ isFavoriteMap[course.id] ? '❤️' : '🤍' }}</text>
@@ -47,7 +33,10 @@
           <view class="course-info">
             <text class="course-title ellipsis-2">{{ course.title }}</text>
             <view class="course-teacher">
-              <image class="teacher-avatar" :src="course.teacherAvatar || 'https://via.placeholder.com/40'" mode="aspectFill" />
+              <view v-if="isEmoji(course.teacherAvatar)" class="teacher-avatar-emoji">{{ course.teacherAvatar }}</view>
+              <image v-else class="teacher-avatar"
+                :src="course.teacherAvatar || 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=teacher%20avatar%20professional%20portrait&image_size=square&width=40&height=40'"
+                mode="aspectFill" />
               <text class="teacher-name">{{ course.teacherName }}</text>
             </view>
             <view class="course-meta">
@@ -57,7 +46,8 @@
             <view class="course-bottom">
               <view class="price-group">
                 <text class="course-price">¥{{ course.price }}</text>
-                <text class="course-original" v-if="course.originalPrice && course.originalPrice > course.price">¥{{ course.originalPrice }}</text>
+                <text class="course-original" v-if="course.originalPrice && course.originalPrice > course.price">¥{{
+                  course.originalPrice }}</text>
               </view>
               <view class="course-favorite-count">
                 <text>{{ course.favoriteCount }}收藏</text>
@@ -66,7 +56,7 @@
           </view>
         </view>
       </view>
-      
+
       <view class="bottom-space"></view>
     </scroll-view>
   </view>
@@ -74,8 +64,10 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
 import { useUserStore } from '@/stores/user'
 import { getRecommendedCourses, getHotCourses, getAllPublishedCourses, searchCourses, addFavorite, removeFavorite, isFavorite, type Course } from '@/api/course'
+import { getOrdersByUserId } from '@/api/order'
 
 const userStore = useUserStore()
 
@@ -89,16 +81,31 @@ const activeTab = ref('recommended')
 const searchKeyword = ref('')
 const courses = ref<Course[]>([])
 const isFavoriteMap = ref<Record<number, boolean>>({})
+const purchasedCourseIds = ref<Set<number>>(new Set())
+
+function isEmoji(str: string): boolean {
+  if (!str) return false
+  const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}]/u
+  return emojiRegex.test(str)
+}
 
 onMounted(async () => {
   userStore.loadFromStorage()
   await loadCourses()
 })
 
+onShow(async () => {
+  if (userStore.isLoggedIn) {
+    await loadCourses()
+  }
+})
+
 async function loadCourses() {
   try {
+    await loadPurchasedCourses()
+
     let result: Course[]
-    
+
     if (searchKeyword.value.trim()) {
       result = await searchCourses(searchKeyword.value)
     } else {
@@ -113,17 +120,33 @@ async function loadCourses() {
           result = await getAllPublishedCourses()
       }
     }
-    
-    courses.value = result
+
+    courses.value = result.filter(course => !purchasedCourseIds.value.has(course.id))
     await loadFavoriteStatus()
   } catch (err) {
     console.error('Load courses failed:', err)
   }
 }
 
+async function loadPurchasedCourses() {
+  purchasedCourseIds.value.clear()
+
+  if (!userStore.userInfo) return
+
+  try {
+    const orders = await getOrdersByUserId(userStore.userInfo.userId)
+    const paidOrders = orders.filter(o => o.status === 'PAID')
+    paidOrders.forEach(order => {
+      purchasedCourseIds.value.add(order.courseId)
+    })
+  } catch (err) {
+    console.error('Load purchased courses failed:', err)
+  }
+}
+
 async function loadFavoriteStatus() {
   if (!userStore.userInfo) return
-  
+
   for (const course of courses.value) {
     try {
       const result = await isFavorite(userStore.userInfo.userId, course.id)
@@ -139,9 +162,9 @@ async function toggleFavorite(course: Course) {
     uni.showToast({ title: '请先登录', icon: 'none' })
     return
   }
-  
+
   const userId = userStore.userInfo.userId
-  
+
   try {
     if (isFavoriteMap.value[course.id]) {
       await removeFavorite(userId, course.id)
@@ -236,7 +259,7 @@ function goToCourseDetail(id: number) {
   gap: 32rpx;
   overflow-x: auto;
   white-space: nowrap;
-  
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -247,11 +270,11 @@ function goToCourseDetail(id: number) {
   color: $text-secondary;
   padding: 12rpx 0;
   position: relative;
-  
+
   &.active {
     color: $primary-color;
     font-weight: 600;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -326,6 +349,17 @@ function goToCourseDetail(id: number) {
   width: 40rpx;
   height: 40rpx;
   border-radius: 50%;
+}
+
+.teacher-avatar-emoji {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fde8e1;
+  font-size: 24rpx;
 }
 
 .teacher-name {

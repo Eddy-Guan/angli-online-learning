@@ -3,7 +3,7 @@
     <view class="header">
       <view class="status-bar"></view>
       <view class="nav-bar">
-        <view class="back-btn" @click="goBack">
+        <view class="back-btn" @click="goBack" @tap="goBack" @click.stop="goBack">
           <text>←</text>
         </view>
         <text class="nav-title">课程详情</text>
@@ -15,11 +15,11 @@
 
     <scroll-view class="content" scroll-y>
       <view class="course-cover-section">
-        <image class="course-cover" :src="course.coverImage" mode="aspectFill" />
+        <image class="course-cover" :src="course.coverImage || '/api/images/default-course.svg'" mode="aspectFill" />
         <view class="course-overlay">
           <view class="course-category">{{ course.category }}</view>
           <view class="course-favorite" @click="toggleFavorite">
-            <text>{{ isFavorite ? '❤️' : '🤍' }}</text>
+            <text>{{ isFavoriteRef ? '❤️' : '🤍' }}</text>
           </view>
         </view>
       </view>
@@ -28,7 +28,9 @@
         <text class="course-title">{{ course.title }}</text>
         <view class="course-meta">
           <view class="teacher-info">
-            <image class="teacher-avatar" :src="course.teacherAvatar || 'https://via.placeholder.com/60'"
+            <view v-if="isEmoji(course.teacherAvatar)" class="teacher-avatar-emoji">{{ course.teacherAvatar }}</view>
+            <image v-else class="teacher-avatar"
+              :src="course.teacherAvatar || 'https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=teacher%20avatar%20professional%20portrait&image_size=square&width=60&height=60'"
               mode="aspectFill" />
             <text class="teacher-name">{{ course.teacherName }}</text>
           </view>
@@ -39,10 +41,13 @@
           </view>
         </view>
         <view class="course-price-row">
-          <view class="price-group">
+          <view class="price-group" v-if="!isPurchased">
             <text class="course-price">¥{{ course.price }}</text>
             <text class="course-original" v-if="course.originalPrice && course.originalPrice > course.price">¥{{
               course.originalPrice }}</text>
+          </view>
+          <view class="purchased-tag" v-else>
+            <text>✓ 已购买</text>
           </view>
         </view>
       </view>
@@ -113,7 +118,8 @@
       </view>
       <view class="bar-right">
         <view class="btn-secondary" @click="goToContact">联系老师</view>
-        <view class="btn-primary" @click="handleBuy">立即购买</view>
+        <view class="btn-primary" v-if="!isPurchased" @click="handleBuy">立即购买</view>
+        <view class="btn-primary" v-else @click="goToLearn">去学习</view>
       </view>
     </view>
   </view>
@@ -124,7 +130,7 @@ import { ref, onMounted } from 'vue'
 import { onLoad } from '@dcloudio/uni-app'
 import { useUserStore } from '@/stores/user'
 import { getCourseById, addFavorite, removeFavorite, isFavorite, getCourseChapters, getCourseEvaluations, type Course, type CourseChapter, type Evaluation } from '@/api/course'
-import { createOrder, payOrder, type PayResult } from '@/api/order'
+import { createOrder, payOrder, getOrdersByUserId, type PayResult } from '@/api/order'
 
 const userStore = useUserStore()
 
@@ -145,10 +151,17 @@ const course = ref<Course>({
   createdAt: ''
 })
 
-const isFavorite = ref(false)
+const isFavoriteRef = ref(false)
+const isPurchased = ref(false)
 const chapters = ref<CourseChapter[]>([])
 const expandedChapters = ref<Record<number, boolean>>({})
 const evaluations = ref<Evaluation[]>([])
+
+function isEmoji(str: string): boolean {
+  if (!str) return false
+  const emojiRegex = /[\u{1F600}-\u{1F64F}\u{1F300}-\u{1F5FF}\u{1F680}-\u{1F6FF}\u{1F1E0}-\u{1F1FF}\u{2600}-\u{26FF}\u{2700}-\u{27BF}\u{1F900}-\u{1F9FF}]/u
+  return emojiRegex.test(str)
+}
 
 onLoad(async (options) => {
   const id = parseInt(options?.id || '1')
@@ -172,10 +185,26 @@ async function loadCourse(id: number) {
 
     if (userStore.userInfo) {
       const favoriteStatus = await isFavorite(userStore.userInfo.userId, id)
-      isFavorite.value = favoriteStatus.isFavorite
+      isFavoriteRef.value = favoriteStatus.isFavorite
+
+      await checkPurchasedStatus(id)
     }
   } catch (err) {
     console.error('Load course failed:', err)
+  }
+}
+
+async function checkPurchasedStatus(courseId: number) {
+  isPurchased.value = false
+
+  if (!userStore.userInfo) return
+
+  try {
+    const orders = await getOrdersByUserId(userStore.userInfo.userId)
+    const paidOrders = orders.filter(o => o.status === 'PAID')
+    isPurchased.value = paidOrders.some(o => o.courseId === courseId)
+  } catch (err) {
+    console.error('Check purchased status failed:', err)
   }
 }
 
@@ -190,12 +219,12 @@ async function toggleFavorite() {
   }
 
   try {
-    if (isFavorite.value) {
+    if (isFavoriteRef.value) {
       await removeFavorite(userStore.userInfo.userId, course.value.id)
-      isFavorite.value = false
+      isFavoriteRef.value = false
     } else {
       await addFavorite(userStore.userInfo.userId, course.value.id)
-      isFavorite.value = true
+      isFavoriteRef.value = true
     }
   } catch (err) {
     console.error('Toggle favorite failed:', err)
@@ -225,14 +254,18 @@ async function handleBuy() {
           uni.hideLoading()
 
           if (payResult.success) {
+            userStore.addPurchasedCourse(course.value.id)
             uni.showToast({ title: '购买成功', icon: 'success' })
             setTimeout(() => {
               uni.switchTab({ url: '/pages/user_learn/index' })
             }, 1500)
+          } else {
+            uni.showToast({ title: '支付失败', icon: 'none' })
           }
         } catch (err: any) {
           uni.hideLoading()
-          uni.showToast({ title: err.message || '购买失败', icon: 'none' })
+          const errorMsg = err.message || (err.data?.message) || '购买失败'
+          uni.showToast({ title: errorMsg, icon: 'none' })
         }
       }
     }
@@ -240,7 +273,21 @@ async function handleBuy() {
 }
 
 function goBack() {
-  uni.navigateBack()
+  uni.switchTab({
+    url: '/pages/user_course/index',
+    fail: () => {
+      uni.redirectTo({
+        url: '/pages/user_course/index',
+        fail: () => {
+          if (typeof window !== 'undefined' && window.history && window.history.length > 1) {
+            window.history.back()
+          } else {
+            window.location.href = '/pages/user_course/index'
+          }
+        }
+      })
+    }
+  })
 }
 
 function goToFavorites() {
@@ -254,6 +301,10 @@ function goToShare() {
 function goToContact() {
   uni.showToast({ title: '联系老师功能开发中', icon: 'none' })
 }
+
+function goToLearn() {
+  uni.switchTab({ url: '/pages/user_learn/index' })
+}
 </script>
 
 <style lang="scss" scoped>
@@ -264,6 +315,8 @@ function goToContact() {
 
 .header {
   background: #fff;
+  position: relative;
+  z-index: 100;
 }
 
 .status-bar {
@@ -362,6 +415,17 @@ function goToContact() {
   border-radius: 50%;
 }
 
+.teacher-avatar-emoji {
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #fde8e1;
+  font-size: 32rpx;
+}
+
 .teacher-name {
   font-size: 28rpx;
   color: $text-secondary;
@@ -396,6 +460,15 @@ function goToContact() {
   font-size: 48rpx;
   font-weight: 700;
   color: $primary-color;
+}
+
+.purchased-tag {
+  background: #52c41a;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 600;
+  padding: 16rpx 32rpx;
+  border-radius: 8rpx;
 }
 
 .course-original {

@@ -6,68 +6,58 @@
         <text class="logo-sub">在线学习平台</text>
       </view>
     </view>
-    
+
     <view class="form-container">
       <view class="form-item">
         <view class="input-group">
           <text class="input-icon">📱</text>
-          <input 
-            v-model="phone" 
-            type="number" 
-            placeholder="请输入手机号" 
-            class="input"
-            maxlength="11"
-          />
+          <input v-model="phone" type="number" placeholder="请输入手机号" class="input" maxlength="11" auto-complete="off"
+            :auto-fill="false" />
         </view>
       </view>
-      
+
       <view class="form-item">
         <view class="input-group">
           <text class="input-icon">🔒</text>
-          <input 
-            v-model="password" 
-            type="password" 
-            placeholder="请输入密码" 
-            class="input"
-            :password="!showPassword"
-          />
+          <input v-model="password" type="text" placeholder="请输入密码" class="input" :password="!showPassword"
+            auto-complete="new-password" :auto-fill="false" />
           <text class="toggle-pwd" @click="showPassword = !showPassword">
             {{ showPassword ? '🙈' : '👁️' }}
           </text>
         </view>
       </view>
-      
+
       <view class="form-item" v-if="isRegister">
         <view class="input-group">
           <text class="input-icon">🔑</text>
-          <input 
-            v-model="confirmPassword" 
-            type="password" 
-            placeholder="请确认密码" 
-            class="input"
-            :password="!showPassword"
-          />
+          <input v-model="confirmPassword" type="text" placeholder="请确认密码" class="input" :password="!showPassword" />
         </view>
       </view>
-      
-      <view class="role-select">
+
+      <view class="form-item" v-if="isRegister">
+        <view class="input-group">
+          <text class="input-icon">📲</text>
+          <input v-model="code" type="number" placeholder="请输入验证码" class="input" maxlength="6" />
+          <view class="code-btn" :class="{ disabled: codeCountdown > 0 }" @click="handleSendCode">
+            {{ codeCountdown > 0 ? `${codeCountdown}s` : '获取验证码' }}
+          </view>
+        </view>
+      </view>
+
+      <view class="role-select" v-if="isRegister">
         <text class="role-label">选择角色：</text>
         <view class="role-options">
-          <view 
-            v-for="role in roles" 
-            :key="role.value"
-            :class="['role-option', { active: selectedRole === role.value }]"
-            @click="selectedRole = role.value"
-          >
+          <view v-for="role in roles" :key="role.value"
+            :class="['role-option', { active: selectedRole === role.value }]" @click="selectedRole = role.value">
             {{ role.label }}
           </view>
         </view>
       </view>
-      
+
       <view class="btn-primary" @click="handleSubmit" :disabled="!canSubmit">
         {{ isRegister ? '注册' : '登录' }}
       </view>
-      
+
       <view class="register-link" @click="toggleRegister">
         {{ isRegister ? '已有账号？立即登录' : '还没有账号？立即注册' }}
       </view>
@@ -78,15 +68,18 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { useUserStore } from '@/stores/user'
+import { sendCode } from '@/api/auth'
 
 const userStore = useUserStore()
 
 const phone = ref('')
 const password = ref('')
 const confirmPassword = ref('')
+const code = ref('')
 const showPassword = ref(false)
 const selectedRole = ref('PARENT')
 const isRegister = ref(false)
+const codeCountdown = ref(0)
 
 const roles = [
   { value: 'PARENT', label: '家长' },
@@ -96,7 +89,8 @@ const roles = [
 
 const canSubmit = computed(() => {
   if (isRegister.value) {
-    return phone.value.length === 11 && password.value.length >= 6 && password.value === confirmPassword.value
+    return phone.value.length === 11 && password.value.length >= 6 &&
+      password.value === confirmPassword.value && code.value.length === 6
   }
   return phone.value.length === 11 && password.value.length >= 6
 })
@@ -110,16 +104,17 @@ async function handleSubmit() {
     }
     return
   }
-  
+
   try {
     if (isRegister.value) {
       await userStore.handleRegister({
         phone: phone.value,
         password: password.value,
         realName: phone.value,
-        role: selectedRole.value
+        role: selectedRole.value,
+        code: code.value
       })
-      
+
       uni.showToast({ title: '注册成功', icon: 'success' })
       setTimeout(() => {
         isRegister.value = false
@@ -132,15 +127,15 @@ async function handleSubmit() {
         phone: phone.value,
         password: password.value
       })
-      
+
       uni.showToast({ title: '登录成功', icon: 'success' })
-      
+
       if (userStore.isParent) {
         uni.switchTab({ url: '/pages/user_home/index' })
       } else if (userStore.isTeacher) {
-        uni.navigateTo({ url: '/pages/teacher_dashboard/index' })
+        uni.navigateTo({ url: '/pages/teacher_home/index' })
       } else if (userStore.isAdmin) {
-        uni.navigateTo({ url: '/pages/admin_dashboard/index' })
+        uni.navigateTo({ url: '/pages/admin_home/index' })
       }
     }
   } catch (err: any) {
@@ -149,11 +144,36 @@ async function handleSubmit() {
   }
 }
 
+async function handleSendCode() {
+  if (phone.value.length !== 11) {
+    uni.showToast({ title: '请输入正确的手机号', icon: 'none' })
+    return
+  }
+  if (codeCountdown.value > 0) {
+    return
+  }
+  try {
+    await sendCode(phone.value)
+    uni.showToast({ title: '验证码已发送', icon: 'success' })
+    codeCountdown.value = 60
+    const timer = setInterval(() => {
+      codeCountdown.value--
+      if (codeCountdown.value <= 0) {
+        clearInterval(timer)
+      }
+    }, 1000)
+  } catch (err: any) {
+    uni.showToast({ title: err.message || '发送失败', icon: 'none' })
+  }
+}
+
 function toggleRegister() {
   isRegister.value = !isRegister.value
   phone.value = ''
   password.value = ''
   confirmPassword.value = ''
+  code.value = ''
+  codeCountdown.value = 0
 }
 </script>
 
@@ -179,6 +199,7 @@ function toggleRegister() {
     color: #fff;
     letter-spacing: 8rpx;
   }
+
   .logo-sub {
     display: block;
     font-size: 28rpx;
@@ -208,7 +229,7 @@ function toggleRegister() {
   height: 96rpx;
   border: 2rpx solid transparent;
   transition: all 0.3s;
-  
+
   &:focus-within {
     border-color: $primary-color;
     background: #fff;
@@ -231,9 +252,22 @@ function toggleRegister() {
   padding: 8rpx;
 }
 
+.code-btn {
+  font-size: 26rpx;
+  color: $primary-color;
+  padding: 12rpx 24rpx;
+  background: $primary-light;
+  border-radius: 8rpx;
+
+  &.disabled {
+    color: #999;
+    background: #f0f0f0;
+  }
+}
+
 .role-select {
   margin-bottom: 48rpx;
-  
+
   .role-label {
     display: block;
     font-size: 28rpx;
@@ -257,7 +291,7 @@ function toggleRegister() {
   color: $text-secondary;
   border: 2rpx solid transparent;
   transition: all 0.3s;
-  
+
   &.active {
     background: $primary-light;
     color: $primary-color;
@@ -273,7 +307,7 @@ function toggleRegister() {
   text-align: center;
   font-size: 28rpx;
   color: $text-secondary;
-  
+
   &:active {
     color: $primary-color;
   }

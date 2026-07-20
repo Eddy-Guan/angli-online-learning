@@ -11,13 +11,13 @@ export interface CheckinResult {
 }
 
 export function getCheckinStatus(userId: number, studentId?: number): Promise<CheckinStatus> {
-  const params: Record<string, number> = { userId }
-  if (studentId) params.studentId = studentId
-  return get('/parent/checkin/status', params)
+  let url = `/parent/checkin/status?userId=${userId}`
+  if (studentId) url += `&studentId=${studentId}`
+  return get(url)
 }
 
 export function checkin(userId: number, studentId?: number): Promise<CheckinResult> {
-  const params: Record<string, number> = { userId }
-  if (studentId) params.studentId = studentId
-  return post('/parent/checkin', params)
+  let url = `/parent/checkin?userId=${userId}`
+  if (studentId) url += `&studentId=${studentId}`
+  return post(url)
 }

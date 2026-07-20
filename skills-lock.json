@@ -12,6 +12,12 @@
       "sourceType": "github",
       "skillPath": "skills/mysql/SKILL.md",
       "computedHash": "a74d7d018c4a9cfe4fd6e37f8758ef03272cde3f3dc2444c4f299636f4b3d275"
+    },
+    "pytest-patterns": {
+      "source": "manutej/luxor-claude-marketplace",
+      "sourceType": "github",
+      "skillPath": "plugins/luxor-testing-essentials/skills/pytest-patterns/SKILL.md",
+      "computedHash": "1d3f63da1a2bb8ef4dc7dffc260f7ec7eeeb36e39479dacb4f895c0ab6dad0dc"
     }
   }
 }

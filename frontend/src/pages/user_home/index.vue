@@ -14,11 +14,11 @@
         </view>
         <view class="notification" @click="goToNotifications">
           <text class="notification-icon">🔔</text>
-          <view class="badge">3</view>
+          <view class="badge" v-if="unreadCount > 0">{{ unreadCount > 99 ? '99+' : unreadCount }}</view>
         </view>
       </view>
     </view>
-    
+
     <scroll-view class="content" scroll-y>
       <view class="banner">
         <swiper class="banner-swiper" indicator-dots circular autoplay interval="4000">
@@ -32,7 +32,7 @@
           </swiper-item>
         </swiper>
       </view>
-      
+
       <view class="checkin-card" @click="handleCheckin" v-if="!checkinStatus.hasChecked">
         <view class="checkin-left">
           <text class="checkin-icon">📅</text>
@@ -52,7 +52,7 @@
           </view>
         </view>
       </view>
-      
+
       <view class="section">
         <view class="section-header">
           <text class="section-title">热门推荐</text>
@@ -60,26 +60,23 @@
         </view>
         <scroll-view class="course-scroll" scroll-x>
           <view class="course-list">
-            <view 
-              v-for="course in recommendedCourses" 
-              :key="course.id" 
-              class="course-card"
-              @click="goToCourseDetail(course.id)"
-            >
-              <image class="course-cover" :src="course.coverImage" mode="aspectFill" />
+            <view v-for="course in recommendedCourses" :key="course.id" class="course-card"
+              @click="goToCourseDetail(course.id)">
+              <image class="course-cover" :src="course.coverImage || '/api/images/default-course.svg'"
+                mode="aspectFill" />
               <view class="course-info">
                 <text class="course-title ellipsis">{{ course.title }}</text>
                 <text class="course-teacher">{{ course.teacherName }}</text>
                 <view class="course-bottom">
                   <text class="course-price">¥{{ course.price }}</text>
-                  <text class="course-students">{{ course.students }}人已学</text>
+                  <text class="course-students">{{ course.enrollmentCount }}人已学</text>
                 </view>
               </view>
             </view>
           </view>
         </scroll-view>
       </view>
-      
+
       <view class="section">
         <view class="section-header">
           <text class="section-title">学习数据</text>
@@ -101,7 +98,7 @@
           </view>
         </view>
       </view>
-      
+
       <view class="section">
         <view class="section-header">
           <text class="section-title">快捷功能</text>
@@ -113,7 +110,7 @@
           </view>
         </view>
       </view>
-      
+
       <view class="bottom-space"></view>
     </scroll-view>
   </view>
@@ -125,6 +122,7 @@ import { useUserStore } from '@/stores/user'
 import { getRecommendedCourses, type Course } from '@/api/course'
 import { getCheckinStatus, checkin, type CheckinStatus } from '@/api/checkin'
 import { getLearningStats, type LearningStats } from '@/api/learning'
+import { getUnreadCount } from '@/api/message'
 
 const userStore = useUserStore()
 
@@ -144,6 +142,7 @@ const quickItems = [
 const recommendedCourses = ref<Course[]>([])
 const checkinStatus = ref<CheckinStatus>({ hasChecked: false, continuousDays: 0 })
 const learningStats = ref<LearningStats>({ totalHours: 0, completedLessons: 0, streakDays: 0 })
+const unreadCount = ref(0)
 
 const currentDate = computed(() => {
   const now = new Date()
@@ -153,12 +152,12 @@ const currentDate = computed(() => {
 
 onMounted(async () => {
   userStore.loadFromStorage()
-  
+
   if (!userStore.isLoggedIn) {
     uni.navigateTo({ url: '/pages/user_login/index' })
     return
   }
-  
+
   await loadData()
 })
 
@@ -166,14 +165,16 @@ async function loadData() {
   try {
     const courses = await getRecommendedCourses()
     recommendedCourses.value = courses
-    
+
     if (userStore.userInfo) {
-      const [status, stats] = await Promise.all([
-        getCheckinStatus(userStore.userInfo.id),
-        getLearningStats(userStore.userInfo.id)
+      const [status, stats, unreadData] = await Promise.all([
+        getCheckinStatus(userStore.userInfo.userId),
+        getLearningStats(userStore.userInfo.userId),
+        getUnreadCount(userStore.userInfo.userId)
       ])
       checkinStatus.value = status
       learningStats.value = stats
+      unreadCount.value = unreadData.count || 0
     }
   } catch (err) {
     console.error('Load data failed:', err)
@@ -182,14 +183,14 @@ async function loadData() {
 
 async function handleCheckin() {
   if (!userStore.userInfo || checkinStatus.value.hasChecked) return
-  
+
   try {
-    const result = await checkin(userStore.userInfo.id)
+    const result = await checkin(userStore.userInfo.userId)
     checkinStatus.value = {
       hasChecked: result.success,
       continuousDays: result.continuousDays
     }
-    
+
     uni.showToast({ title: '打卡成功', icon: 'success' })
   } catch (err) {
     console.error('Checkin failed:', err)
@@ -197,7 +198,7 @@ async function handleCheckin() {
 }
 
 function goToNotifications() {
-  uni.showToast({ title: '通知功能开发中', icon: 'none' })
+  uni.navigateTo({ url: '/pages/user_notifications/index' })
 }
 
 function goToCourseList() {
@@ -276,6 +277,7 @@ function handleQuickLink(key: string) {
     color: #fff;
     font-weight: 600;
   }
+
   .greeting-sub {
     display: block;
     font-size: 24rpx;
@@ -287,7 +289,7 @@ function handleQuickLink(key: string) {
 .notification {
   position: relative;
   font-size: 44rpx;
-  
+
   .badge {
     position: absolute;
     top: -8rpx;
@@ -331,6 +333,7 @@ function handleQuickLink(key: string) {
     font-weight: 700;
     margin-bottom: 12rpx;
   }
+
   .banner-sub {
     display: block;
     font-size: 28rpx;
@@ -347,10 +350,10 @@ function handleQuickLink(key: string) {
   justify-content: space-between;
   align-items: center;
   border: 2rpx solid $primary-color;
-  
+
   &.checked {
     border-color: #52c41a;
-    
+
     .checkin-title {
       color: #52c41a;
     }
@@ -374,6 +377,7 @@ function handleQuickLink(key: string) {
     font-weight: 600;
     color: $primary-color;
   }
+
   .checkin-days {
     display: block;
     font-size: 24rpx;
@@ -389,7 +393,7 @@ function handleQuickLink(key: string) {
   border-radius: 12rpx;
   font-size: 28rpx;
   font-weight: 600;
-  
+
   &:active {
     opacity: 0.85;
   }
@@ -416,7 +420,7 @@ function handleQuickLink(key: string) {
 .section-more {
   font-size: 26rpx;
   color: $text-secondary;
-  
+
   &:active {
     color: $primary-color;
   }

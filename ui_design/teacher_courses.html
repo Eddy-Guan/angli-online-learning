@@ -1,6 +1,9 @@
 <!doctype html>
 <html lang="zh-CN">
-<head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/><title>教师端 · 昂立教育</title>
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>课程管理 · 昂立教育</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--p:#F05A22;--pl:#fde8e1;--bg:#F5F5F5;--s:#FFF;--fg:#333;--m:#999;--b:#eee;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
@@ -32,7 +35,7 @@ body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;li
 .bn{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:6px 0 16px;background:var(--s);border-top:1px solid var(--b);z-index:10}
 .ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--m);text-decoration:none;cursor:pointer}
 .ni.on{color:var(--p)}
-.page{display:none}.page.on{display:block}.fr{margin-bottom:10px}
+.fr{margin-bottom:10px}
 .fr label{display:block;font-size:11px;color:var(--m);margin-bottom:3px;font-weight:500}
 .fr input,.fr select,.fr textarea{width:100%;padding:8px 10px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f);outline:none}
 .fr input:focus,.fr select:focus,.fr textarea:focus{border-color:var(--p)}
@@ -184,25 +187,7 @@ body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;li
 </style>
 </head>
 <body>
-<div id="page-profile" class="page on">
-<div class="hd"><span>教师主页</span><span style="font-size:13px;color:var(--m)">设置 ⚙️</span></div>
-<div class="pf">
-<div class="av">👨‍🏫</div><h3>张伟老师</h3><div class="tl">数学 · 金牌讲师 · 教龄8年</div>
-<div class="stat"><div><b>42</b><span>授课数</span></div><div><b>128</b><span>学生数</span></div><div><b>4.9</b><span>评分</span></div></div>
-</div>
-<div class="cr"><div class="th">🔔</div><div class="in"><h4>今日待办</h4><div class="mt">📖 初三数学课 14:00-16:00 · 检查作业 · 推送今日总结</div></div></div>
-<div class="ps">
-<h3>📊 教学数据</h3>
-<div style="display:flex;gap:12px;margin-bottom:12px">
-<div style="flex:1;text-align:center;padding:10px;background:var(--pl);border-radius:var(--r)"><div style="font-size:18px;font-weight:700;color:var(--p)">86%</div><div style="font-size:11px;color:var(--m)">到课率</div></div>
-<div style="flex:1;text-align:center;padding:10px;background:var(--pl);border-radius:var(--r)"><div style="font-size:18px;font-weight:700;color:var(--p)">92%</div><div style="font-size:11px;color:var(--m)">作业提交</div></div>
-<div style="flex:1;text-align:center;padding:10px;background:var(--pl);border-radius:var(--r)"><div style="font-size:18px;font-weight:700;color:var(--p)">4.9</div><div style="font-size:11px;color:var(--m)">家长评分</div></div>
-</div>
-</div>
-<div style="height:80px"></div>
-</div>
-
-<div id="page-courses" class="page">
+>
 <div class="hd"><span>我的课程</span><span style="font-size:13px;color:var(--m)">全部 →</span></div>
 <div class="tb"><span class="t on" onclick="switchCourseTab(this,0)">📖 进行中</span><span class="t" onclick="switchCourseTab(this,1)">✅ 已结束</span></div>
 <div id="course-active">
@@ -335,253 +320,13 @@ body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;li
 <div style="height:80px"></div>
 </div>
 
-<div id="page-push" class="page">
-<div class="hd"><span>推送通知</span><span style="font-size:13px;color:var(--m)">历史记录 →</span></div>
-
-<div class="ps">
-<h3>📨 发送课程通知</h3>
-
-<!-- Course selector with confirm -->
-<div class="fr">
-<label style="display:block;font-size:12px;color:var(--m);margin-bottom:4px">选择课程</label>
-<div class="cs-row">
-<select id="pushCourse" style="flex:1;padding:10px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f)">
-<option>初一数学 · 暑期培优班</option><option>初二数学 · 几何强化</option><option>初三数学 · 中考冲刺班</option>
-</select>
-<button class="cs-btn" onclick="confirmCourse()">确认</button>
-</div>
-</div>
-
-<!-- Summary editor -->
-<div class="fr">
-<label style="display:block;font-size:12px;color:var(--m);margin-bottom:4px">📖 今日总结</label>
-<textarea class="ta" id="pushSummary" placeholder="课堂内容、重点知识点、学生表现概况...">有理数运算复习顺利完成。
-重点：加减法法则、去括号规则。
-大部分同学掌握较好，个别同学需加强练习。</textarea>
-</div>
-
-<!-- Homework editor -->
-<div class="fr">
-<label style="display:block;font-size:12px;color:var(--m);margin-bottom:4px">📝 今日作业</label>
-<textarea class="ta" id="pushHomework" placeholder="布置的作业内容、截止时间...">练习册 P23-25 第1-8题
-预习下一章内容，完成预习单
-截止时间：明天上课前提交</textarea>
-</div>
-
-<!-- Good students -->
-<div class="fr">
-<label style="display:block;font-size:12px;color:var(--m);margin-bottom:4px">⭐ 表现优秀学生</label>
-<input class="gs-inp" id="pushGoodStudents" placeholder="输入学生姓名，用逗号或空格分隔" value="张明轩、李雨桐、王子涵、陈思睿"/>
-<div class="gs-hint">课后表现突出的学生，家长会收到表扬通知</div>
-</div>
-
-<!-- Push target -->
-<div class="fr">
-<label style="display:block;font-size:12px;color:var(--m);margin-bottom:4px">推送对象</label>
-<div class="pt-row">
-  <span class="pt-info">全部家长（86人）— 初一数学班</span>
-  <button class="pt-btn" onclick="showParentList()">详细</button>
-</div>
-</div>
-
-<button class="btn" onclick="doPush()">📤 发送通知</button>
-</div>
-
+<div 
 <div style="height:80px"></div>
-</div><!-- Parent List Overlay -->
-<div class="overlay" id="parentOverlay">
-  <div class="ol-h">
-    <button class="close" onclick="closeParentList()">✕</button>
-    <input type="text" placeholder="搜索家长姓名、学生名称…" oninput="filterParents(this)"/>
-  </div>
-  <div class="pl" id="parentList">
-    <div class="all-cb">
-      <input type="checkbox" id="checkAll" checked onchange="toggleAllParents(this)" style="width:18px;height:18px;accent-color:var(--p)"/>
-      <label for="checkAll">全部家长← 全选</label>
-      <span style="font-size:11px;color:var(--m2);margin-left:auto">86人</span>
-    </div>
-    <div class="pi"><input type="checkbox" class="pi-cb" checked style="width:18px;height:18px;accent-color:var(--p)"/><div class="pa c1">李</div><div class="pb"><div class="pn">李明妈妈</div><div class="pp">孩子：李宇明 · 初一数学</div></div></div>
-    <div class="pi"><input type="checkbox" class="pi-cb" checked style="width:18px;height:18px;accent-color:var(--p)"/><div class="pa c2">张</div><div class="pb"><div class="pn">张雪雯妈妈</div><div class="pp">孩子：张明轩 · 初一数学</div></div></div>
-    <div class="pi"><input type="checkbox" class="pi-cb" checked style="width:18px;height:18px;accent-color:var(--p)"/><div class="pa c3">王</div><div class="pb"><div class="pn">王建国先生</div><div class="pp">孩子：王子涵 · 初一数学</div></div></div>
-    <div class="pi"><input type="checkbox" class="pi-cb" checked style="width:18px;height:18px;accent-color:var(--p)"/><div class="pa c4">陈</div><div class="pb"><div class="pn">陈思璋妈妈</div><div class="pp">孩子：陈思璋 · 初一数学</div></div></div>
-    <div class="pi"><input type="checkbox" class="pi-cb" checked style="width:18px;height:18px;accent-color:var(--p)"/><div class="pa c5">刘</div><div class="pb"><div class="pn">刘佳琪爸爸</div><div class="pp">孩子：刘佳琪 · 初一数学</div></div></div>
-    <div class="pi"><input type="checkbox" class="pi-cb" checked style="width:18px;height:18px;accent-color:var(--p)"/><div class="pa c1">黄</div><div class="pb"><div class="pn">黄丽丽妈妈</div><div class="pp">孩子：黄宇轩 · 初一数学</div></div></div>
-    <div class="pi"><input type="checkbox" class="pi-cb" checked style="width:18px;height:18px;accent-color:var(--p)"/><div class="pa c2">周</div><div class="pb"><div class="pn">周雪妮妈妈</div><div class="pp">孩子：周子昱 · 初一数学</div></div></div>
-    <div class="pl-add" onclick="toast('搜索家长功能')">+ 添加家长</div>
-  </div>
-  <div class="ol-confirm"><button class="btn" onclick="closeParentList();toast('已更新推送对象')">确认推送对象</button></div>
-</div>
 <nav class="bn">
-  <a class="ni on" onclick="switchPage('profile',this)" data-page="profile">👨‍🏫<span>主页</span></a>
-  <a class="ni" onclick="switchPage('apply',this)" data-page="apply">📝<span>课程申请</span></a>
-  <a class="ni" onclick="switchPage('courses',this)" data-page="courses">📚<span>课程</span></a>
-  <a class="ni" onclick="switchPage('push',this)" data-page="push">📨<span>推送</span></a>
-<script>
-function switchPage(pg,el){
-document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
-document.getElementById('page-'+pg).classList.add('on');
-document.querySelectorAll('.ni').forEach(n=>n.classList.remove('on'));
-if(el)el.classList.add('on');
-}
-function switchCourseTab(el,idx){
-document.querySelectorAll('.t').forEach(t=>t.classList.remove('on'));
-el.classList.add('on');
-document.getElementById('course-active').style.display=idx===0?'block':'none';
-document.getElementById('course-done').style.display=idx===1?'block':'none';
-}
-document.querySelectorAll('.pg .tg').forEach(function(el){el.addEventListener('click',function(){this.classList.toggle('on')})});
-
-var appData = JSON.parse(localStorage.getItem("teacherApps") || "[]");
-var appData = JSON.parse(localStorage.getItem("teacherApps") || "[]");
-function addChapter(){var d=document.getElementById("chList");var r=document.createElement("div");r.className="ap-ch-row";var num=d.querySelectorAll(".ap-ch-row").length+1;r.innerHTML='<span class="ap-ch-num">'+num+'</span><input class="ap-ch-inp" placeholder="章节名称"/><input class="ap-ch-desc" placeholder="章节简介（可选）"/><button class="ap-ch-del" onclick="removeChapter(this)">×</button>';d.appendChild(r);}
-function removeChapter(el){var r=el.closest(".ap-ch-row");if(document.querySelectorAll(".ap-ch-row").length>1){r.remove();var rows=document.querySelectorAll(".ap-ch-row");rows.forEach(function(row,i){var num=row.querySelector(".ap-ch-num");if(num)num.textContent=i+1;});}}
-function submitApply(){var name=document.getElementById("apName").value.trim();if(!name){alert("请输入课程名称");return;}var grade=document.getElementById("apGrade").value;var teacher=document.getElementById("apTeacher").value;var hours=document.getElementById("apHours").value;var price=document.getElementById("apPrice").value.trim()||"待定价";var desc=document.getElementById("apDesc").value.trim()||"无简介";var chRows=document.querySelectorAll(".ap-ch-row");var chapters=[];chRows.forEach(function(r){var cn=r.querySelector(".ap-ch-inp").value.trim();if(cn)chapters.push(cn);});appData.push({name:name,grade:grade,teacher:teacher,hours:hours,desc:desc,chapters:chapters,status:"pending",time:new Date().toLocaleDateString("zh-CN")});
-localStorage.setItem("teacherApps", JSON.stringify(appData));renderApps();document.getElementById("apName").value="";document.getElementById("apDesc").value="";document.getElementById("apHours").value="16";document.getElementById("chList").innerHTML="";for(var i=0;i<2;i++){var r=document.createElement("div");r.className="ap-ch-row";r.innerHTML='<span class="ap-ch-num">'+(i+1)+'</span><input class="ap-ch-inp" placeholder="章节名称"/><input class="ap-ch-desc" placeholder="章节简介（可选）"/><button class="ap-ch-del" onclick="removeChapter(this)">×</button>';document.getElementById("chList").appendChild(r);}switchPage("apply",document.querySelectorAll(".ni")[1]);alert("✅ 申请已提交，等待管理员审核");}
-function renderApps(){var list=document.getElementById("apList");if(appData.length===0){list.innerHTML='<div class="ap-empty"><div class="ap-empty-ico">📋</div><p>暂无申请记录<br/>填写上方信息后提交审核申请</p></div>';return;}var h="";for(var i=appData.length-1;i>=0;i--){var a=appData[i];var st=a.status==="pending"?"⏳ 待审核":a.status==="approved"?"✅ 已通过":"❌ 已驳回";var stCls=a.status==="pending"?"pen":a.status==="approved"?"ok":"no";var ico=a.status==="pending"?"📤":a.status==="approved"?"✅":"❌";var chTags="";if(a.chapters.length>0){chTags='<div class="ap-rec-ch">';a.chapters.forEach(function(c){chTags+='<span>'+c+'</span>';});chTags+="</div>";}h+='<div class="ap-rec-card"><div class="ap-rec-h"><h4>'+a.name+'</h4><span class="ap-rec-st '+stCls+'">'+st+'</span></div><div class="ap-rec-meta">'+a.grade+' · '+a.teacher+' · '+a.hours+'课时 · '+a.price+' · '+a.time+'</div>'+chTags+'</div>';}list.innerHTML=h;}renderApps();
-
-function toggleCourse(el){
-  var body=el.nextElementSibling;
-  var arrow=el.querySelector(".ar");
-  body.classList.toggle("open");
-  arrow.classList.toggle("open");
-}
-function toggleLesson(btn,courseId){
-  var ll=btn.closest(".ll");
-  var isDone=btn.classList.contains("do");
-  var no=ll.querySelector(".no");
-  var ls=ll.querySelector(".ls");
-  if(isDone){
-    btn.innerText="标记完成";
-    btn.className="mk und";
-    if(no)no.className="no";
-    if(ls)ls.textContent="可标记";
-  }else{
-    btn.innerText="已完成";
-    btn.className="mk do";
-    if(no)no.className="no done";
-    if(ls)ls.textContent="已完成";
-  }
-  updateCourseDisplay(courseId);
-}
-function updateCourseDisplay(courseId){
-  var courseEl=document.querySelector("#progPct"+courseId).closest(".cc");
-  var doneCount=courseEl.querySelectorAll(".mk.do").length;
-  var total=courseEl.querySelectorAll(".ll").length;
-  var perc=Math.round(doneCount/total*100);
-  var bar=courseEl.querySelector(".fl");
-  if(bar)bar.style.width=perc+"%";
-  var pctEl=document.getElementById("progPct"+courseId);
-  if(pctEl)pctEl.textContent=perc+"%";
-  var dEl=document.getElementById("doneCount"+courseId);
-  if(dEl)dEl.textContent=doneCount;
-  var sel=document.getElementById("progSel"+courseId);
-  if(sel)sel.value=doneCount;
-}
-function quickSetProgress(courseId){
-  var sel=document.getElementById("progSel"+courseId);
-  if(!sel)return;
-  var completed=parseInt(sel.value);
-  var courseEl=sel.closest(".cc");
-  var lessons=courseEl.querySelectorAll(".ll");
-  lessons.forEach(function(ll,i){
-    var no=ll.querySelector(".no");
-    var btn=ll.querySelector(".mk");
-    var ls=ll.querySelector(".ls");
-    if(i<completed){
-      if(no)no.className="no done";
-      if(btn){btn.innerText="已完成";btn.className="mk do";}
-      if(ls)ls.textContent="已完成";
-    }else{
-      if(no)no.className="no";
-      if(btn){btn.innerText="标记完成";btn.className="mk und";}
-      if(ls)ls.textContent="可标记";
-    }
-  });
-  updateCourseDisplay(courseId);
-}
-
-var pushSelectedParents = ["all"];
-function confirmCourse(){
-  var el=document.getElementById("pushCourse");
-  toast("已确认课程："+el.value);
-}
-function showParentList(){
-  document.getElementById("parentOverlay").classList.add("show");
-}
-function closeParentList(){
-  document.getElementById("parentOverlay").classList.remove("show");
-}
-function toggleAllParents(el){
-  var checked=el.checked;
-  document.querySelectorAll(".pi-cb").forEach(function(cb){cb.checked=checked;});
-}
-function doPush(){
-  var summary=document.getElementById("pushSummary").value.trim();
-  var homework=document.getElementById("pushHomework").value.trim();
-  if(!summary&&!homework){toast("请填写总结或作业内容");return;}
-  toast("通知已发送给全体家长");
-}
-function toast(msg){
-  var t=document.getElementById("toast");
-  if(!t){
-    t=document.createElement("div");
-    t.id="toast";
-    t.style.cssText="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.78);color:#fff;padding:10px 22px;border-radius:8px;font-size:13px;z-index:999;display:none;text-align:center;pointer-events:none";
-    document.body.appendChild(t);
-  }
-  t.textContent=msg;t.style.display="block";
-  setTimeout(function(){t.style.display="none"},1600);
-}
-
-</script>
+  <a class="ni"><span>👨‍🏫</span><span>主页</span></a>
+  <a class="ni"><span>📝</span><span>课程申请</span></a>
+  <a class="ni on"><span>📚</span><span>课程</span></a>
+  <a class="ni"><span>📨</span><span>推送</span></a>
 </nav>
-
-    <div id="page-apply" class="page">
-<div class="hd"><span>课程申请</span><span style="font-size:13px;color:var(--m)">申请记录 →</span></div>
-<div class="ap-steps">
-  <div class="ap-step on"><div class="ap-step-num">1</div><div class="ap-step-lb">填写信息</div></div>
-  <div class="ap-step-line"></div>
-  <div class="ap-step"><div class="ap-step-num">2</div><div class="ap-step-lb">提交审核</div></div>
-  <div class="ap-step-line"></div>
-  <div class="ap-step"><div class="ap-step-num">3</div><div class="ap-step-lb">等待通过</div></div>
-</div>
-<div class="ap-hero">
-  <h2>📝 申请新课程</h2>
-  <p>填写课程信息，提交至管理员审核。审核通过后将自动上架发布。</p>
-</div>
-<div class="ap-sec">
-  <div class="ap-sec-h">📋 课程信息</div>
-  <div class="ap-sec-b">
-    <div class="ap-field"><label>课程名称 <span style="color:var(--p)">*</span></label>
-    <input class="ap-inp" id="apName" placeholder="例：初一数学 · 思维训练班"/></div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
-      <div><label style="display:block;font-size:11px;color:var(--m);margin-bottom:4px;font-weight:500">学科/年级</label>
-      <select class="ap-sel" id="apGrade">
-        <option>初一数学</option><option>初二数学</option><option>初三数学</option>
-        <option>初一英语</option><option>初二英语</option><option>初三英语</option>
-        <option>初一语文</option><option>初二语文</option><option>初三语文</option>
-        <option>初二物理</option><option>初三物理</option><option>初三化学</option>
-      </select></div>
-      <div><label style="display:block;font-size:11px;color:var(--m);margin-bottom:4px;font-weight:500">授课教师</label>
-      <input class="ap-inp" id="apTeacher" value="张伟老师" readonly style="background:var(--bg);cursor:default"/></div>
-    </div>
-    <div class="ap-field"><label>总课时数</label>
-    <input class="ap-inp" type="number" id="apHours" value="16" min="1" max="99" style="max-width:120px"/></div>
-    <div class="ap-field"><label>课程简介</label>
-    <textarea class="ap-ta" id="apDesc" placeholder="描述课程目标、适合学生群体、课程特色..."></textarea></div>
-  </div>
-</div>
-<div class="ap-sec">
-  <div class="ap-sec-h">📖 课程章节 <span class="ap-badge">可多添加</span></div>
-  <div class="ap-sec-b">
-    <div class="ap-ch-list" id="chList"></div>
-    <button class="ap-add-ch" onclick="addChapter()" style="margin-top:8px">➕ 添加章节</button>
-  </div>
-</div>
-<button class="ap-submit" onclick="submitApply()" style="margin:0 16px 12px">📤 提交审核申请</button>
-<div class="ap-sec">
-  <div class="ap-sec-h">📊 我的申请记录</div>
-  <div class="ap-sec-b" id="apList"></div>
-</div>
-<div style="height:80px"></div></div>
-</body></html>
+</body>
+</html>

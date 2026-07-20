@@ -1,14 +1,16 @@
-import type { UniApp } from '@dcloudio/types'
+const BASE_URL = '/api'
 
-const BASE_URL = 'http://localhost:8080/api'
-
-interface RequestOptions extends UniApp.RequestOptions {
+interface RequestOptions {
+  url: string
+  method?: 'GET' | 'POST' | 'PUT' | 'DELETE'
+  data?: Record<string, any>
+  header?: Record<string, string>
   showLoading?: boolean
   showError?: boolean
 }
 
 export function request<T = any>(options: RequestOptions): Promise<T> {
-  const { showLoading = true, showError = true, url, ...rest } = options
+  const { showLoading = true, showError = true, url, method = 'GET', data, header: customHeader } = options
   
   return new Promise((resolve, reject) => {
     if (showLoading) {
@@ -18,7 +20,7 @@ export function request<T = any>(options: RequestOptions): Promise<T> {
     const token = uni.getStorageSync('token')
     const header: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...rest.header
+      ...customHeader
     }
     
     if (token) {
@@ -27,25 +29,26 @@ export function request<T = any>(options: RequestOptions): Promise<T> {
     
     uni.request({
       url: `${BASE_URL}${url}`,
+      method,
+      data,
       header,
-      ...rest,
       success: (res) => {
         if (showLoading) {
           uni.hideLoading()
         }
         
-        const data = res.data as { code: number; message: string; data: T }
+        const responseData = res.data as { code: number; message: string; data: T }
         
-        if (data.code === 200) {
-          resolve(data.data)
+        if (responseData.code === 200) {
+          resolve(responseData.data)
         } else {
           if (showError) {
             uni.showToast({
-              title: data.message || '请求失败',
+              title: responseData.message || '请求失败',
               icon: 'none'
             })
           }
-          reject(data)
+          reject(responseData)
         }
       },
       fail: (err) => {

@@ -142,7 +142,17 @@ function onGradeChange(e: any) {
 }
 
 async function handleBind() {
-  if (!userStore.userInfo) return
+  if (!userStore.userInfo) {
+    uni.showToast({ title: '请先登录', icon: 'none' })
+    return
+  }
+  
+  if (!form.value.name.trim()) {
+    uni.showToast({ title: '请输入孩子姓名', icon: 'none' })
+    return
+  }
+  
+  uni.showLoading({ title: '绑定中...' })
   
   try {
     await addStudent(userStore.userInfo.userId, {
@@ -152,14 +162,17 @@ async function handleBind() {
       gender: form.value.gender
     })
     
-    uni.showToast({ title: '绑定成功', icon: 'success' })
+    uni.hideLoading()
+    uni.showToast({ title: '绑定成功', icon: 'success', duration: 2000 })
     
     form.value = { name: '', age: undefined, grade: undefined, gender: '' }
     gradeIndex.value = -1
     
     await loadChildren()
   } catch (err: any) {
-    uni.showToast({ title: err.message || '绑定失败', icon: 'none' })
+    uni.hideLoading()
+    const errorMsg = err.message || (err.data?.message) || '绑定失败'
+    uni.showToast({ title: errorMsg, icon: 'none', duration: 2000 })
   }
 }
 

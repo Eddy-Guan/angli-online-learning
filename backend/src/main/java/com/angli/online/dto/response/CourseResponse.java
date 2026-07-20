@@ -7,36 +7,38 @@ import java.math.BigDecimal;
 @Data
 public class CourseResponse {
 
-    private Long id;
+  private Long id;
 
-    private String title;
+  private String title;
 
-    private String description;
+  private String description;
 
-    private String coverImage;
+  private String coverImage;
 
-    private BigDecimal price;
+  private BigDecimal price;
 
-    private BigDecimal originalPrice;
+  private BigDecimal originalPrice;
 
-    private String level;
+  private String level;
 
-    private Integer duration;
+  private Integer duration;
 
-    private Integer lessons;
+  private Integer totalHours;
 
-    private String teacherName;
+  private Integer lessons;
 
-    private String teacherAvatar;
+  private String teacherName;
 
-    private String status;
+  private String teacherAvatar;
 
-    private String category;
+  private String status;
 
-    private Double rating;
+  private String category;
 
-    private Integer students;
+  private Double rating;
 
-    private String createdAt;
+  private Integer enrollmentCount;
+
+  private String createdAt;
 
 }

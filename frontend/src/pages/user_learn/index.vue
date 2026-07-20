@@ -6,21 +6,18 @@
         <text class="nav-title">学习中心</text>
       </view>
     </view>
-    
+
     <scroll-view class="content" scroll-y>
       <view class="section">
         <view class="section-header">
           <text class="section-title">我的课程</text>
         </view>
-        
+
         <view class="learning-list" v-if="learningCourses.length > 0">
-          <view 
-            v-for="course in learningCourses" 
-            :key="course.id" 
-            :class="['learning-card', { ended: course.status === 'ENDED' }]"
-            @click="goToLearnCourse(course.id)"
-          >
-            <image class="learning-cover" :src="course.coverImage" mode="aspectFill" />
+          <view v-for="course in learningCourses" :key="course.id"
+            :class="['learning-card', { ended: course.status === 'ENDED' }]" @click="goToLearnCourse(course.id)">
+            <image class="learning-cover" :src="course.coverImage || '/api/images/default-course.svg'"
+              mode="aspectFill" />
             <view class="course-end-tag" v-if="course.status === 'ENDED'">已结束</view>
             <view class="learning-info">
               <text class="learning-title ellipsis">{{ course.title }}</text>
@@ -44,7 +41,7 @@
             </view>
           </view>
         </view>
-        
+
         <view class="empty-state" v-else>
           <text class="empty-icon">📚</text>
           <text class="empty-title">还没有学习的课程</text>
@@ -52,12 +49,12 @@
           <view class="btn-primary" style="margin-top: 32rpx;" @click="goToCourseCenter">去选课</view>
         </view>
       </view>
-      
+
       <view class="section">
         <view class="section-header">
           <text class="section-title">学习计划</text>
         </view>
-        
+
         <view class="plan-card">
           <view class="plan-header">
             <text class="plan-title">本周学习目标</text>
@@ -84,7 +81,7 @@
           </view>
         </view>
       </view>
-      
+
       <view class="bottom-space"></view>
     </scroll-view>
   </view>
@@ -92,6 +89,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { onShow } from '@dcloudio/uni-app'
 import { useUserStore } from '@/stores/user'
 import { getOrdersByUserId } from '@/api/order'
 import { getCourseById, type Course } from '@/api/course'
@@ -122,44 +120,50 @@ const weekRange = computed(() => {
   monday.setDate(now.getDate() - day + 1)
   const sunday = new Date(monday)
   sunday.setDate(monday.getDate() + 6)
-  
+
   return `${monday.getMonth() + 1}/${monday.getDate()} - ${sunday.getMonth() + 1}/${sunday.getDate()}`
 })
 
 onMounted(async () => {
   userStore.loadFromStorage()
-  
+
   if (!userStore.isLoggedIn) {
     uni.navigateTo({ url: '/pages/user_login/index' })
     return
   }
-  
+
   await loadLearningCourses()
+})
+
+onShow(async () => {
+  if (userStore.isLoggedIn) {
+    await loadLearningCourses()
+  }
 })
 
 async function loadLearningCourses() {
   if (!userStore.userInfo) return
-  
+
   try {
     const orders = await getOrdersByUserId(userStore.userInfo.userId)
     const paidOrders = orders.filter(o => o.status === 'PAID')
-    
-    const courses: LearningCourse[] = []
-    for (const order of paidOrders) {
-      try {
-        const course = await getCourseById(order.courseId)
-        courses.push({
+
+    const coursePromises = paidOrders.map(order =>
+      getCourseById(order.courseId)
+        .then(course => ({
           ...course,
           progress: Math.floor(Math.random() * 100),
           endDate: course.status === 'ENDED' ? '2024-01-15' : undefined,
           canEvaluate: course.status === 'PUBLISHED' && Math.random() > 0.5
+        }))
+        .catch(() => {
+          console.error(`Failed to load course ${order.courseId}`)
+          return null
         })
-      } catch {
-        console.error(`Failed to load course ${order.courseId}`)
-      }
-    }
-    
-    learningCourses.value = courses
+    )
+
+    const results = await Promise.all(coursePromises)
+    learningCourses.value = results.filter((course): course is LearningCourse => course !== null)
   } catch (err) {
     console.error('Load learning courses failed:', err)
   }
@@ -238,11 +242,11 @@ function goToCourseCenter() {
   gap: 24rpx;
   margin-bottom: 20rpx;
   position: relative;
-  
+
   &:active {
     background: #f8f8f8;
   }
-  
+
   &.ended {
     opacity: 0.7;
   }

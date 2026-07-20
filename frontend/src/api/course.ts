@@ -55,7 +55,7 @@ export function getCourseById(id: number): Promise<Course> {
 }
 
 export function searchCourses(keyword: string): Promise<Course[]> {
-  return get('/public/courses/search', { keyword })
+  return get(`/public/courses/search?keyword=${encodeURIComponent(keyword)}`)
 }
 
 export function addFavorite(userId: number, courseId: number): Promise<{ success: boolean }> {

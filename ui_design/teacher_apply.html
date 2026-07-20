@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>课程申请 · 昂立教育</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--p:#F05A22;--pl:#fde8e1;--bg:#F5F5F5;--s:#FFF;--fg:#333;--m:#999;--b:#eee;--r:10px;--rl:12px;--f:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",sans-serif}
+body{font-family:var(--f);background:var(--bg);color:var(--fg);font-size:14px;line-height:1.5}
+.hd{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;background:var(--s);font-size:18px;font-weight:700}
+.tb{display:flex;background:var(--s);padding:0 16px;border-bottom:1px solid var(--b)}
+.t{font-size:14px;padding:10px 14px;border-bottom:2px solid transparent;color:var(--m);cursor:pointer}
+.t.on{color:var(--p);border-bottom-color:var(--p);font-weight:600}
+.cr{background:var(--s);margin:8px 16px;padding:14px;border-radius:var(--rl);border:1px solid var(--b);display:flex;gap:12px}
+.cr .th{width:60px;height:60px;background:var(--pl);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+.cr .in{flex:1}
+.cr h4{font-size:14px;font-weight:600;margin-bottom:2px}
+.cr .mt{font-size:12px;color:var(--m)}
+.cr .st{font-size:12px;color:var(--p)}
+.pf{padding:20px 16px;background:var(--s);text-align:center}
+.pf .av{width:64px;height:64px;background:var(--pl);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 8px;color:var(--p)}
+.pf h3{font-size:18px;margin-bottom:2px}
+.pf .tl{font-size:13px;color:var(--m);margin-bottom:12px}
+.pf .stat{display:flex;justify-content:center;gap:24px}
+.pf .stat b{font-size:18px;display:block}.pf .stat span{font-size:12px;color:var(--m)}
+.ps{margin:16px;background:var(--s);border-radius:var(--rl);padding:16px;border:1px solid var(--b)}
+.ps h3{font-size:15px;font-weight:600;margin-bottom:12px}
+.pg{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px}
+.pg .tg{padding:6px 14px;border:1px solid var(--b);border-radius:16px;font-size:13px;cursor:pointer;color:var(--fg)}
+.pg .tg.on{background:var(--p);color:#fff;border-color:var(--p)}
+.ta{width:100%;padding:10px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f);resize:vertical;min-height:80px;outline:none}
+.ta:focus{border-color:var(--p)}
+.btn{display:block;width:100%;padding:12px;background:var(--p);color:#fff;border:none;border-radius:var(--r);font-size:14px;margin-top:12px;cursor:pointer}
+.bn{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:space-around;padding:6px 0 16px;background:var(--s);border-top:1px solid var(--b);z-index:10}
+.ni{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--m);text-decoration:none;cursor:pointer}
+.ni.on{color:var(--p)}
+.fr{margin-bottom:10px}
+.fr label{display:block;font-size:11px;color:var(--m);margin-bottom:3px;font-weight:500}
+.fr input,.fr select,.fr textarea{width:100%;padding:8px 10px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f);outline:none}
+.fr input:focus,.fr select:focus,.fr textarea:focus{border-color:var(--p)}
+@media(max-width:400px){.fr-h{grid-template-columns:1fr}}
+.ch-row{display:flex;gap:6px;margin-bottom:4px;align-items:center}
+.ch-row input{padding:6px 8px;border:1px solid var(--b);border-radius:6px;font-size:12px;font-family:var(--f);flex:1;outline:none}
+.ch-row input:focus{border-color:var(--p)}
+.ch-row button{width:24px;height:24px;border:none;background:#ff4d4d;color:#fff;border-radius:50%;font-size:14px;cursor:pointer;flex-shrink:0;line-height:1}
+.btn-s{display:inline-flex;align-items:center;gap:4px;padding:6px 12px;background:var(--s);color:var(--fg);border:1px solid var(--b);border-radius:var(--r);font-size:12px;cursor:pointer;font-family:var(--f)}
+.btn-s:hover{background:var(--bg)}
+.ap-card{padding:10px;border:1px solid var(--b);border-radius:var(--r);margin-bottom:6px;font-size:12px}
+.ap-card .ap-h{display:flex;justify-content:space-between;margin-bottom:4px;align-items:center}
+.ap-card .ap-h h4{font-size:13px;font-weight:600}
+.ap-st{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:500}
+.ap-st.pen{background:#fff7e6;color:#fa8c16;border:1px solid #ffd591}
+.ap-st.ok{background:#f6ffed;color:#52c41a;border:1px solid #b7eb8f}
+.ap-st.no{background:#fff2f0;color:#ff4d4d;border:1px solid #ffccc7}
+
+/* Course progress selectors */
+.cc{margin:8px 0;background:var(--s);border-radius:var(--rl);border:1px solid var(--b);overflow:hidden}
+.cc-h{display:flex;align-items:center;gap:12px;padding:14px;cursor:pointer}
+.cc-h .th{width:48px;height:48px;background:var(--pl);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.cc-h .in{flex:1}
+.cc-h .in h4{font-size:14px;font-weight:600;margin-bottom:2px}
+.cc-h .in .mt{font-size:12px;color:var(--m)}
+.cc-h .ar{font-size:14px;color:var(--m);transition:transform .2s}
+.cc-h .ar.open{transform:rotate(180deg)}
+.cc-b{max-height:0;overflow:hidden;transition:max-height .3s ease}
+.cc-b.open{max-height:600px}
+.ci{margin:0 14px 14px;padding:12px;background:#fafafa;border-radius:var(--r)}
+.ci .ph{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.ci .ph h5{font-size:13px;font-weight:600}
+.ci .pbr{height:4px;background:var(--pl);border-radius:2px;overflow:hidden;margin-bottom:6px}
+.ci .pbr .fl{height:100%;background:var(--p);border-radius:2px;transition:width .3s}
+.ci .stat{display:flex;gap:12px;font-size:11px;color:var(--m);align-items:center}
+.prog-sel{padding:3px 8px;border:1px solid var(--b);border-radius:4px;font-size:11px;font-family:var(--f);outline:none;background:var(--s);color:var(--fg);cursor:pointer}
+.ll{margin:0 14px 4px;padding:8px 10px;border-radius:6px;display:flex;align-items:center;gap:8px;font-size:13px;border:1px solid var(--b);background:var(--s)}
+.ll .no{width:22px;height:22px;background:var(--pl);color:var(--p);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:10px;flex-shrink:0}
+.ll .no.done{background:var(--p);color:#fff}
+.ll .in{flex:1}
+.ll .in .ln{font-weight:500}
+.ll .in .ls{font-size:11px;color:var(--m)}
+.ll .mk{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:4px;font-size:10px;cursor:pointer;border:none;font-family:var(--f)}
+.ll .mk.do{background:var(--p);color:#fff}
+.ll .mk.und{background:var(--bg);color:var(--m);border:1px solid var(--b)}
+
+/* Course application styles */
+.ap-banner{background:linear-gradient(135deg,var(--p),#e04d16);margin:0;padding:10px 14px;color:#fff}
+.ap-banner h2{font-size:18px;margin-bottom:4px;display:flex;align-items:center;gap:8px}
+.ap-banner p{font-size:12px;opacity:.85;line-height:1.6}
+.ap-sec{background:var(--s);margin:6px 12px;border-radius:10px;border:1px solid var(--b);overflow:hidden}
+.ap-sec-h{padding:8px 12px 0;font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;color:var(--fg)}
+.ap-sec-h .badge{display:inline-block;padding:1px 8px;border-radius:10px;font-size:10px;font-weight:500;background:var(--pl);color:var(--p)}
+.ap-sec-b{padding:2px 12px 10px}
+.ap-sec-b .fr{margin-bottom:4px}
+.ap-inp{width:100%;padding:10px 12px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f);outline:none;background:var(--s);transition:border-color .2s}
+.ap-inp:focus{border-color:var(--p);box-shadow:0 0 0 2px rgba(240,90,34,.1)}
+.ap-sel{width:100%;padding:10px 12px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f);outline:none;background:var(--s);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center}
+.ap-sel:focus{border-color:var(--p);box-shadow:0 0 0 2px rgba(240,90,34,.1)}
+.ap-ta{width:100%;padding:10px 12px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f);outline:none;resize:vertical;min-height:70px;transition:border-color .2s}
+.ap-ta:focus{border-color:var(--p);box-shadow:0 0 0 2px rgba(240,90,34,.1)}
+.ap-ch-list{padding:0}
+.ap-ch-row{display:flex;gap:6px;padding:8px 12px;margin:0;align-items:center;border-bottom:1px solid var(--bg);background:var(--s)}
+.ap-ch-row:last-child{border-bottom:none}
+.ap-ch-num{width:22px;height:22px;background:var(--pl);color:var(--p);border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px;flex-shrink:0}
+.ap-ch-inp{flex:1;padding:8px 10px;border:1px solid var(--b);border-radius:6px;font-size:13px;font-family:var(--f);outline:none;transition:border-color .2s}
+.ap-ch-inp:focus{border-color:var(--p);box-shadow:0 0 0 2px rgba(240,90,34,.1)}
+.ap-ch-desc{flex:1;padding:8px 10px;border:1px solid var(--b);border-radius:6px;font-size:12px;font-family:var(--f);outline:none}
+.ap-ch-desc:focus{border-color:var(--p)}
+.ap-ch-del{width:26px;height:26px;border:none;background:#ff4d4d;color:#fff;border-radius:50%;font-size:14px;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:opacity .2s}
+.ap-ch-del:hover{opacity:.8}
+.ap-add-ch{display:inline-flex;align-items:center;gap:4px;padding:8px 14px;border:1px dashed var(--b);border-radius:var(--r);font-size:12px;cursor:pointer;background:var(--s);color:var(--p);transition:all .2s;font-family:var(--f)}
+.ap-add-ch:hover{border-color:var(--p);background:var(--pl)}
+.ap-submit{display:block;width:calc(100% - 32px);padding:13px;background:linear-gradient(135deg,var(--p),#e04d16);color:#fff;border:none;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;transition:opacity .2s;font-family:var(--f)}
+.ap-submit:hover{opacity:.9;transform:translateY(-1px)}
+.ap-submit:active{transform:translateY(0);opacity:.8}
+.ap-record{display:flex;gap:10px;padding:12px;border:1px solid var(--b);border-radius:var(--rl);margin-bottom:10px;background:var(--s);transition:box-shadow .2s}
+.ap-record:hover{box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.ap-record .ap-ico{width:40px;height:40px;background:var(--pl);border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+.ap-record .ap-body{flex:1;min-width:0}
+.ap-record .ap-body h4{font-size:13px;font-weight:600;margin-bottom:2px;display:flex;align-items:center;gap:6px}
+.ap-record .ap-body .ap-meta{font-size:11px;color:var(--m);margin-bottom:2px}
+.ap-record .ap-body .ap-ch-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px}
+.ap-record .ap-body .ap-ch-tags span{padding:1px 6px;background:var(--bg);border-radius:4px;font-size:10px;color:var(--m)}
+.ap-empty{text-align:center;padding:32px 16px}
+.ap-empty .ap-empty-ico{font-size:40px;margin-bottom:12px}
+.ap-empty p{font-size:12px;color:var(--m);line-height:1.6;max-width:260px;margin:0 auto}
+.ap-hint{font-size:10px;color:var(--m);margin-top:2px}
+#page-apply.on{max-width:480px;margin:0 auto}
+
+
+/* Redesigned course app styles */
+.ap-steps{display:flex;align-items:center;justify-content:center;gap:0;padding:20px 16px 8px;margin:0}
+.ap-step{display:flex;flex-direction:column;align-items:center;gap:4px}
+.ap-step-num{width:28px;height:28px;border-radius:50%;background:#eee;color:var(--m);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;transition:all .3s ease}
+.ap-step.on .ap-step-num{background:var(--p);color:#fff}
+.ap-step-lb{font-size:10px;color:var(--m);white-space:nowrap}
+.ap-step.on .ap-step-lb{color:var(--p);font-weight:500}
+.ap-step-line{width:32px;height:2px;background:#eee;margin:0 4px;position:relative;top:-12px;transition:background .3s ease}
+.ap-hero{padding:8px 16px 4px}
+.ap-hero h2{font-size:20px;font-weight:700;color:var(--fg)}
+.ap-hero p{font-size:12px;color:var(--m);margin-top:2px}
+.ap-field{margin-bottom:8px}
+.ap-field label{display:block;font-size:11px;color:var(--m);margin-bottom:4px;font-weight:500}
+.ap-rec-card{background:var(--s);border:1px solid var(--b);border-radius:12px;padding:14px;margin-bottom:10px;transition:box-shadow .2s,border-color .2s}
+.ap-rec-card:hover{box-shadow:0 2px 12px rgba(0,0,0,.08);border-color:var(--p)}
+.ap-rec-h{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px}
+.ap-rec-h h4{font-size:14px;font-weight:600;flex:1}
+.ap-rec-st{display:inline-block;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:500;white-space:nowrap;margin-left:8px;flex-shrink:0}
+.ap-rec-st.pen{background:#fff7e6;color:#fa8c16;border:1px solid #ffd591}
+.ap-rec-st.ok{background:#f6ffed;color:#52c41a;border:1px solid #b7eb8f}
+.ap-rec-st.no{background:#fff2f0;color:#ff4d4d;border:1px solid #ffccc7}
+.ap-rec-meta{font-size:11px;color:var(--m);margin-bottom:4px;line-height:1.5}
+.ap-rec-ch{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}
+.ap-rec-ch span{padding:2px 8px;background:var(--bg);border-radius:4px;font-size:10px;color:var(--m)}
+.ap-sec-h .ap-badge{display:inline-block;padding:2px 10px;border-radius:20px;font-size:10px;font-weight:500;background:var(--pl);color:var(--p);margin-left:auto}
+
+
+.cs-row{display:flex;gap:8px;align-items:center}
+.cs-btn{padding:10px 16px;background:var(--pl);color:var(--p);border:1px solid var(--p);border-radius:var(--r);font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;-webkit-tap-highlight-color:transparent}
+.cs-btn:active{background:var(--p);color:#fff}
+.gs-inp{width:100%;padding:11px 14px;border:1px solid var(--b);border-radius:var(--r);font-size:13px;font-family:var(--f);outline:none}
+.gs-inp:focus{border-color:var(--p)}
+.gs-hint{font-size:11px;color:var(--m2);margin-top:4px}
+.pt-row{display:flex;align-items:center;justify-content:space-between;background:#fafafa;border:1px solid var(--b);border-radius:var(--r);padding:10px 14px}
+.pt-info{font-size:13px;color:var(--fg)}
+.pt-btn{padding:6px 14px;background:var(--s);color:var(--p);border:1px solid var(--p);border-radius:6px;font-size:12px;font-weight:500;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pt-btn:active{background:var(--pl)}
+/* Parent list overlay */
+.overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:var(--s);z-index:200;display:none;overflow-y:auto}
+.overlay.show{display:block}
+.ol-h{display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--b);position:sticky;top:0;background:var(--s);z-index:3}
+.ol-h input{flex:1;padding:8px 12px;border:1px solid var(--b);border-radius:8px;font-size:13px;font-family:var(--f);outline:none}
+.ol-h input:focus{border-color:var(--p)}
+.ol-h .close{background:none;border:none;font-size:20px;color:var(--m2);cursor:pointer;padding:4px;line-height:1}
+.pl{padding:8px 16px 16px;display:flex;flex-direction:column;gap:6px}
+.pl .all-cb{display:flex;align-items:center;gap:8px;padding:10px 0 8px;border-bottom:1px solid var(--b);margin-bottom:4px}
+.pl .all-cb label{font-size:13px;font-weight:600;color:var(--fg)}
+.pi{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r);transition:background .1s}
+.pi:active{background:#f5f5f5}
+.pi .pa{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff;flex-shrink:0}
+.pi .pa.c1{background:var(--p)}.pi .pa.c2{background:#2196f3}.pi .pa.c3{background:#4caf50}.pi .pa.c4{background:#9c27b0}.pi .pa.c5{background:#ff9800}
+.pi .pb{flex:1}
+.pi .pb .pn{font-size:13px;font-weight:500}
+.pi .pb .pp{font-size:11px;color:var(--m2)}
+.pl-add{margin-top:8px;padding:12px;text-align:center;border:1.5px dashed var(--b);border-radius:var(--r);color:var(--p);font-size:13px;font-weight:500;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.pl-add:active{background:var(--pl);border-color:var(--p)}
+.ol-confirm{padding:12px 16px;border-top:1px solid var(--b);position:sticky;bottom:0;background:var(--s)}
+</style>
+</head>
+<body>
+>
+<div class="hd"><span>课程申请</span><span style="font-size:13px;color:var(--m)">申请记录 →</span></div>
+<div class="ap-steps">
+  <div class="ap-step on"><div class="ap-step-num">1</div><div class="ap-step-lb">填写信息</div></div>
+  <div class="ap-step-line"></div>
+  <div class="ap-step"><div class="ap-step-num">2</div><div class="ap-step-lb">提交审核</div></div>
+  <div class="ap-step-line"></div>
+  <div class="ap-step"><div class="ap-step-num">3</div><div class="ap-step-lb">等待通过</div></div>
+</div>
+<div class="ap-hero">
+  <h2>📝 申请新课程</h2>
+  <p>填写课程信息，提交至管理员审核。审核通过后将自动上架发布。</p>
+</div>
+<div class="ap-sec">
+  <div class="ap-sec-h">📋 课程信息</div>
+  <div class="ap-sec-b">
+    <div class="ap-field"><label>课程名称 <span style="color:var(--p)">*</span></label>
+    <input class="ap-inp" id="apName" placeholder="例：初一数学 · 思维训练班"/></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">
+      <div><label style="display:block;font-size:11px;color:var(--m);margin-bottom:4px;font-weight:500">学科/年级</label>
+      <select class="ap-sel" id="apGrade">
+        <option>初一数学</option><option>初二数学</option><option>初三数学</option>
+        <option>初一英语</option><option>初二英语</option><option>初三英语</option>
+        <option>初一语文</option><option>初二语文</option><option>初三语文</option>
+        <option>初二物理</option><option>初三物理</option><option>初三化学</option>
+      </select></div>
+      <div><label style="display:block;font-size:11px;color:var(--m);margin-bottom:4px;font-weight:500">授课教师</label>
+      <input class="ap-inp" id="apTeacher" value="张伟老师" readonly style="background:var(--bg);cursor:default"/></div>
+    </div>
+    <div class="ap-field"><label>总课时数</label>
+    <input class="ap-inp" type="number" id="apHours" value="16" min="1" max="99" style="max-width:120px"/></div>
+    <div class="ap-field"><label>课程简介</label>
+    <textarea class="ap-ta" id="apDesc" placeholder="描述课程目标、适合学生群体、课程特色..."></textarea></div>
+  </div>
+</div>
+<div class="ap-sec">
+  <div class="ap-sec-h">📖 课程章节 <span class="ap-badge">可多添加</span></div>
+  <div class="ap-sec-b">
+    <div class="ap-ch-list" id="chList"></div>
+    <button class="ap-add-ch" onclick="addChapter()" style="margin-top:8px">➕ 添加章节</button>
+  </div>
+</div>
+<button class="ap-submit" onclick="submitApply()" style="margin:0 16px 12px">📤 提交审核申请</button>
+<div class="ap-sec">
+  <div class="ap-sec-h">📊 我的申请记录</div>
+  <div class="ap-sec-b" id="apList"></div>
+</div>
+<div style="height:80px"></div><
+<div style="height:80px"></div>
+<nav class="bn">
+  <a class="ni"><span>👨‍🏫</span><span>主页</span></a>
+  <a class="ni on"><span>📝</span><span>课程申请</span></a>
+  <a class="ni"><span>📚</span><span>课程</span></a>
+  <a class="ni"><span>📨</span><span>推送</span></a>
+</nav>
+</body>
+</html>

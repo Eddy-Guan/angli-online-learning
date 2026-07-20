@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { login, register, type LoginData, type RegisterData, type LoginResponse } from '@/api/auth'
+import { getOrdersByUserId } from '@/api/order'
 
 export interface UserInfo {
   userId: number
@@ -13,6 +14,7 @@ export interface UserInfo {
 export const useUserStore = defineStore('user', () => {
   const token = ref<string>('')
   const userInfo = ref<UserInfo | null>(null)
+  const purchasedCourseIds = ref<Set<number>>(new Set())
   
   const isLoggedIn = computed(() => !!token.value)
   const isParent = computed(() => userInfo.value?.role === 'PARENT')
@@ -48,9 +50,34 @@ export const useUserStore = defineStore('user', () => {
   function logout() {
     token.value = ''
     userInfo.value = null
+    purchasedCourseIds.value.clear()
     uni.removeStorageSync('token')
     uni.removeStorageSync('userInfo')
     uni.navigateTo({ url: '/pages/user_login/index' })
+  }
+  
+  async function loadPurchasedCourseIds() {
+    purchasedCourseIds.value.clear()
+    
+    if (!userInfo.value) return
+    
+    try {
+      const orders = await getOrdersByUserId(userInfo.value.userId)
+      const paidOrders = orders.filter(o => o.status === 'PAID')
+      paidOrders.forEach(order => {
+        purchasedCourseIds.value.add(order.courseId)
+      })
+    } catch (err) {
+      console.error('Load purchased course IDs failed:', err)
+    }
+  }
+  
+  function addPurchasedCourse(courseId: number) {
+    purchasedCourseIds.value.add(courseId)
+  }
+  
+  function hasPurchasedCourse(courseId: number): boolean {
+    return purchasedCourseIds.value.has(courseId)
   }
   
   function loadFromStorage() {
@@ -73,6 +100,7 @@ export const useUserStore = defineStore('user', () => {
   return {
     token,
     userInfo,
+    purchasedCourseIds,
     isLoggedIn,
     isParent,
     isTeacher,
@@ -82,6 +110,9 @@ export const useUserStore = defineStore('user', () => {
     handleLogin,
     handleRegister,
     logout,
-    loadFromStorage
+    loadFromStorage,
+    loadPurchasedCourseIds,
+    addPurchasedCourse,
+    hasPurchasedCourse
   }
 })

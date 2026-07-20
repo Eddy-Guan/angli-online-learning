@@ -119,12 +119,6 @@ public class OrderServiceImpl implements OrderService {
             return;
         }
 
-        Course course = courseMapper.selectById(order.getCourseId());
-        if (course != null) {
-            course.setEnrollmentCount(course.getEnrollmentCount() + 1);
-            courseMapper.updateById(course);
-        }
-
         Enrollment existingEnrollment = enrollmentMapper.selectOne(new LambdaQueryWrapper<Enrollment>()
                 .eq(Enrollment::getUserId, order.getUserId())
                 .eq(Enrollment::getCourseId, order.getCourseId()));

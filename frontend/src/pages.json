@@ -57,16 +57,121 @@
       }
     },
     {
-      "path": "pages/teacher_dashboard/index",
+      "path": "pages/user_notifications/index",
       "style": {
-        "navigationBarTitleText": "教师端",
+        "navigationBarTitleText": "消息通知",
         "navigationStyle": "custom"
       }
     },
     {
-      "path": "pages/admin_dashboard/index",
+      "path": "pages/teacher_home/index",
+      "style": {
+        "navigationBarTitleText": "教师主页",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/teacher_apply/index",
+      "style": {
+        "navigationBarTitleText": "课程申请",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/teacher_apply_records/index",
+      "style": {
+        "navigationBarTitleText": "申请记录",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/teacher_courses/index",
+      "style": {
+        "navigationBarTitleText": "我的课程",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/teacher_push/index",
+      "style": {
+        "navigationBarTitleText": "推送通知",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/teacher_push_history/index",
+      "style": {
+        "navigationBarTitleText": "推送历史",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/teacher_notifications/index",
+      "style": {
+        "navigationBarTitleText": "消息通知",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/teacher_settings/index",
+      "style": {
+        "navigationBarTitleText": "教师设置",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_home/index",
       "style": {
         "navigationBarTitleText": "管理后台",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_review/index",
+      "style": {
+        "navigationBarTitleText": "审核管理",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_content/index",
+      "style": {
+        "navigationBarTitleText": "内容管理",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_courses/index",
+      "style": {
+        "navigationBarTitleText": "课程管理",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_publish-course/index",
+      "style": {
+        "navigationBarTitleText": "发布课程",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_publish-notice/index",
+      "style": {
+        "navigationBarTitleText": "发布公告",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_users/index",
+      "style": {
+        "navigationBarTitleText": "用户管理",
+        "navigationStyle": "custom"
+      }
+    },
+    {
+      "path": "pages/admin_profile/index",
+      "style": {
+        "navigationBarTitleText": "个人中心",
         "navigationStyle": "custom"
       }
     }
